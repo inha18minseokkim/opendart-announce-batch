@@ -10,7 +10,7 @@ import org.springframework.data.annotation.Id;
 import java.time.LocalDate;
 
 
-@Entity(name = "announceDefault")
+@Entity(name = "CorpCommonAnnouncement")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
