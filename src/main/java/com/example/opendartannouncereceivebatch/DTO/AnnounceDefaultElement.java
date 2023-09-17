@@ -2,14 +2,14 @@ package com.example.opendartannouncereceivebatch.DTO;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.io.Serializable;
 @ToString
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class AnnounceDefaultElement implements Serializable {
     //법인구분	    법인구분 : Y(유가), K(코스닥), N(코넥스), E(기타)
     private String corp_cls;
