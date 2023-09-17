@@ -1,7 +1,5 @@
 package com.example.opendartannouncereceivebatch.DTO;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.*;
 
 import java.io.Serializable;

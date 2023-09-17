@@ -1,5 +1,6 @@
 package com.example.opendartannouncereceivebatch.Step;
 
+import com.example.opendartannouncereceivebatch.Reader.CorpCodeReaderImpl;
 import com.example.opendartannouncereceivebatch.Repository.CorpInfoRepository;
 import com.example.opendartannouncereceivebatch.Tasklet.DefaultAnnounceApiReceive;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +11,6 @@ import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.core.step.tasklet.Tasklet;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -27,10 +27,10 @@ public class DefaultAnnouncementApiReceiveStepConfig {
         return exampleJob;
     }
 
-    @Bean
-    public Tasklet defaultTasklet(CorpInfoRepository corpInfoRepository) {
-        return new DefaultAnnounceApiReceive(corpInfoRepository);
-    }
+//    @Bean
+//    public Tasklet defaultTasklet(CorpInfoRepository corpInfoRepository, CorpCodeReaderImpl corpCodeReaderImpl) {
+//        return new DefaultAnnounceApiReceive(corpInfoRepository,corpCodeReaderImpl);
+//    }
 
     @Bean
     public Step myStep(JobRepository jobRepository, DefaultAnnounceApiReceive defaultTasklet, PlatformTransactionManager transactionManager) {
