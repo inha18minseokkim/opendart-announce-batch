@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @SpringBootTest
@@ -19,5 +20,13 @@ class CorpInfoRepositoryTest {
         List<CorpInfo> corpInfoList = corpInfoRepository.findAll();
         System.out.println(corpInfoList.size());
         //Assertions.assertNotEquals(corpInfoList.size(), 0);
+    }
+    @Test
+    public void corpInfo_findByName() {
+        List<String> corpNames = List.of("삼성전자","LG","SK하이닉스");
+        List<CorpInfo> corpInfoList = corpNames.stream().map(corpInfoRepository::findFirstByCorpName)
+                .filter(Optional::isPresent)
+                .map(Optional::get).toList();
+        System.out.println(corpInfoList.toString());
     }
 }
