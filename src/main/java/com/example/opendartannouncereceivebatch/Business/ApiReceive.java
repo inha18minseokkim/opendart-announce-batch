@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @Slf4j
@@ -54,9 +55,9 @@ public class ApiReceive {
      * targetCorpList에 회사이름 넣고 corpCodeReader에 corpCodeReaderTestImpl넣으면 특정 회사들에 대한 공시정보 가져옴
      * targetCorpList에 빈 리스트 넣고 corpCodeReader에 corpCodeReaderImpl 넣으면 db에 있는 모든 회사들에 대한 정보 가져옴
      */
-    public List<AnnounceDefaultElement> getAnnouncementList(CorpCodeReader corpCodeReader, List<String> targetCorpList, String beginDate, String endDate) {
+    public Stream<AnnounceDefaultElement> getAnnouncementList(CorpCodeReader corpCodeReader, List<String> targetCorpList, String beginDate, String endDate) {
         List<CorpInfo> corpInfoList = corpCodeReader.getTargetCorpList(targetCorpList);
-        List<AnnounceDefaultElement> announceDefaultElementList = corpInfoList.parallelStream().map((CorpInfo corpInfo) -> {
+        Stream<AnnounceDefaultElement> announceDefaultElementList = corpInfoList.parallelStream().map((CorpInfo corpInfo) -> {
             List<AnnounceDefaultResponse> tempResponse = new ArrayList<>();
             Integer pageNumber = 1;
             while (true) {
@@ -67,13 +68,13 @@ public class ApiReceive {
                 pageNumber++;
             }
             return tempResponse;
-        }).flatMap(List::stream).map(AnnounceDefaultResponse::getList).flatMap(List::stream).collect(Collectors.toList());
+        }).flatMap(List::stream).map(AnnounceDefaultResponse::getList).flatMap(List::stream);
         return announceDefaultElementList;
     }
     /*
      * beginDate ~ endDate동안 모든 회사에 대한 공시정보 가져옴
      * */
-    public List<AnnounceDefaultElement> getAnnouncementList(String beginDate,String endDate){
+    public Stream<AnnounceDefaultElement> getAnnouncementList(String beginDate,String endDate){
         List<AnnounceDefaultResponse> tempResponse = new ArrayList<>();
         Integer pageNumber = 1;
         while (true) {
@@ -85,6 +86,6 @@ public class ApiReceive {
         }
         log.info(tempResponse.size()+"");
         return tempResponse.stream().map(AnnounceDefaultResponse::getList)
-                .flatMap(List::stream).collect(Collectors.toList());
+                .flatMap(List::stream);
     }
 }

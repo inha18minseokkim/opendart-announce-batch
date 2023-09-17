@@ -4,7 +4,6 @@ import com.example.opendartannouncereceivebatch.DTO.AnnounceDefaultElement;
 import com.example.opendartannouncereceivebatch.DTO.AnnounceDefaultResponse;
 import com.example.opendartannouncereceivebatch.Entity.CorpInfo;
 import com.example.opendartannouncereceivebatch.Reader.CorpCodeReaderTestImpl;
-import com.example.opendartannouncereceivebatch.Tasklet.DefaultAnnounceApiReceive;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,8 +11,8 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @SpringBootTest
 class ApiReceiveTest {
@@ -36,15 +35,15 @@ class ApiReceiveTest {
     @Test
     public void receive_api_list() {
         List<String> corpNameList = List.of("삼성전자");
-        List<AnnounceDefaultElement> announcementList = apiReceive.
+        Stream<AnnounceDefaultElement> announcementList = apiReceive.
                 getAnnouncementList(corpCodeReaderTest, corpNameList,"20230810","20230915");
-        System.out.println(announcementList.size());
+        System.out.println(announcementList.collect(Collectors.toList()).size());
 
     }
     @Test
     public void receive_daily_list() {
-        List<AnnounceDefaultElement> announcementList = apiReceive.getAnnouncementList("20230915", "20230915");
-        System.out.println(announcementList.size());
+        Stream<AnnounceDefaultElement> announcementList = apiReceive.getAnnouncementList("20230915", "20230915");
+        System.out.println(announcementList.collect(Collectors.toList()).size());
     }
 
 }
