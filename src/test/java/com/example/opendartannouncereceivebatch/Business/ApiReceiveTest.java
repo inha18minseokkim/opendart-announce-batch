@@ -4,7 +4,11 @@ import com.example.opendartannouncereceivebatch.DTO.AnnounceDefaultElement;
 import com.example.opendartannouncereceivebatch.DTO.AnnounceDefaultResponse;
 import com.example.opendartannouncereceivebatch.Entity.CorpInfo;
 import com.example.opendartannouncereceivebatch.Reader.CorpCodeReaderTestImpl;
+import com.example.opendartannouncereceivebatch.Step.DefaultAnnouncementApiReceiveStepConfig;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import reactor.core.publisher.Mono;
@@ -14,10 +18,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@SpringBootTest
+@SpringBootTest(args = {"--beginDate=20230818","--endDate=20230819"})
+@ExtendWith(MockitoExtension.class)
 class ApiReceiveTest {
     @Autowired
     private ApiReceive apiReceive;
+    @Mock
+    private DefaultAnnouncementApiReceiveStepConfig defaultAnnouncementApiReceiveStepConfig;
 
     @Test
     public void receive_api() {
@@ -42,7 +49,8 @@ class ApiReceiveTest {
     }
     @Test
     public void receive_daily_list() {
-        Stream<AnnounceDefaultElement> announcementList = apiReceive.getAnnouncementList("20230915", "20230915");
+        Stream<AnnounceDefaultElement> announcementList = apiReceive.getAnnouncementList("20230918", "20230918");
+        //announcementList.forEach(System.out::println);
         System.out.println(announcementList.collect(Collectors.toList()).size());
     }
 
