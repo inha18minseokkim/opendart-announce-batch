@@ -5,6 +5,7 @@ import com.example.opendartannouncereceivebatch.DTO.AnnounceDefaultResponse;
 import com.example.opendartannouncereceivebatch.Entity.CorpInfo;
 import com.example.opendartannouncereceivebatch.Reader.CorpCodeReader;
 import com.example.opendartannouncereceivebatch.Repository.CorpInfoRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -22,9 +23,9 @@ import java.util.stream.Stream;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class ApiReceive {
-    CorpInfoRepository corpInfoRepository;
-    CorpCodeReader corpCodeReaderImpl;
+
     @Value("${opendart.secret}")
     private String opendartSecret;
 

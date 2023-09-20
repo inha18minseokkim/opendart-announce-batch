@@ -6,25 +6,32 @@ import com.example.opendartannouncereceivebatch.Repository.AnnounceDefaultReposi
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.StepContribution;
+import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
+import org.springframework.boot.ApplicationArguments;
 import org.springframework.stereotype.Component;
 
-@Component
+
 @Slf4j
 @AllArgsConstructor
+@StepScope
+@Component
 public class DailyAnnounceApiReceiveTasklet implements Tasklet {
-    private ApiReceive apiReceive;
-    private AnnounceDefaultMapper announceDefaultMapper;
-    private AnnounceDefaultRepository announceDefaultRepository;
+
+    private final ApiReceive apiReceive;
+    private final AnnounceDefaultMapper announceDefaultMapper;
+    private final AnnounceDefaultRepository announceDefaultRepository;
+    private final ApplicationArguments applicationArguments;
     @Override
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-        //beginDate, endDate 명세 받아오
-        String beginDate = chunkContext.getStepContext().getStepExecution().getJobParameters().getString("beginDate");
-        String endDate = chunkContext.getStepContext().getStepExecution().getJobParameters().getString("endDate");
+        String beginDate = applicationArguments.getOptionValues("beginDate").get(0);
+        String endDate = applicationArguments.getOptionValues("endDate").get(0);
+
         log.info(String.format("%s ~ %s 모든 기업 공시정보 가져오기",beginDate,endDate));
-        apiReceive.getAnnouncementList(beginDate, endDate).map(announceDefaultMapper::from).forEach((announceDefault -> {
+        apiReceive.getAnnouncementList(beginDate, endDate).filter((ele) -> ele!=null)
+                .map(announceDefaultMapper::from).forEach((announceDefault -> {
             log.info(announceDefault.toString());
             announceDefaultRepository.save(announceDefault);
         }));
