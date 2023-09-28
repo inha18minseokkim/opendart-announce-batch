@@ -7,8 +7,8 @@ import java.util.List;
 
 @Getter
 @ToString
-public class AnnounceEssentialResponse<T> {
+public class AnnounceEssentialResponse {
     private String status;
     private String message;
-    private List<T> list;
+    private List<Object> list;
 }
