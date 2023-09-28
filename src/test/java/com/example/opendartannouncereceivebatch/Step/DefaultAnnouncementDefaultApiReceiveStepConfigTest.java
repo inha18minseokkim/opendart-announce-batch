@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(args = {"--beginDate=20230818","--endDate=20230818"})
-class DefaultAnnouncementApiReceiveStepConfigTest {
+class DefaultAnnouncementDefaultApiReceiveStepConfigTest {
     @Test
     public void idTest() {
         System.out.println(String.format("dailyReceiveJob:%s", LocalDateTime.now()));

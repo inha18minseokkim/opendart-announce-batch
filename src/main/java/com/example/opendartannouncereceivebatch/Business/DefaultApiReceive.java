@@ -1,17 +1,18 @@
 package com.example.opendartannouncereceivebatch.Business;
 
+import com.example.opendartannouncereceivebatch.Code.AnnounceKindCode;
 import com.example.opendartannouncereceivebatch.DTO.AnnounceDefaultElement;
 import com.example.opendartannouncereceivebatch.DTO.AnnounceDefaultResponse;
+import com.example.opendartannouncereceivebatch.DTO.AnnounceEssentialResponse;
 import com.example.opendartannouncereceivebatch.Entity.CorpInfo;
 import com.example.opendartannouncereceivebatch.Reader.CorpCodeReader;
-import com.example.opendartannouncereceivebatch.Repository.CorpInfoRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
@@ -24,7 +25,7 @@ import java.util.stream.Stream;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class ApiReceive {
+public class DefaultApiReceive {
 
     @Value("${opendart.secret}")
     private String opendartSecret;
