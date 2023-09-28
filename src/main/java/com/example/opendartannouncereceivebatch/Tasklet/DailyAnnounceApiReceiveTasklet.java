@@ -1,6 +1,6 @@
 package com.example.opendartannouncereceivebatch.Tasklet;
 
-import com.example.opendartannouncereceivebatch.Business.ApiReceive;
+import com.example.opendartannouncereceivebatch.Business.DefaultApiReceive;
 import com.example.opendartannouncereceivebatch.Mapper.AnnounceDefaultMapper;
 import com.example.opendartannouncereceivebatch.Repository.AnnounceDefaultRepository;
 import lombok.AllArgsConstructor;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class DailyAnnounceApiReceiveTasklet implements Tasklet {
 
-    private final ApiReceive apiReceive;
+    private final DefaultApiReceive defaultApiReceive;
     private final AnnounceDefaultMapper announceDefaultMapper;
     private final AnnounceDefaultRepository announceDefaultRepository;
     private final ApplicationArguments applicationArguments;
@@ -30,7 +30,7 @@ public class DailyAnnounceApiReceiveTasklet implements Tasklet {
         String endDate = applicationArguments.getOptionValues("endDate").get(0);
 
         log.info(String.format("%s ~ %s 모든 기업 공시정보 가져오기",beginDate,endDate));
-        apiReceive.getAnnouncementList(beginDate, endDate).filter((ele) -> ele!=null)
+        defaultApiReceive.getAnnouncementList(beginDate, endDate).filter((ele) -> ele!=null)
                 .map(announceDefaultMapper::from).forEach((announceDefault -> {
             log.info(announceDefault.toString());
             announceDefaultRepository.save(announceDefault);
