@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AnnouncePaidIncreaseElement {
+public class AnnouncePaidIncreaseElement implements EssentialResponseElement {
     //	접수번호
     private String rcept_no;
     //	법인구분

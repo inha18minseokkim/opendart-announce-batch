@@ -1,35 +1,103 @@
 package com.example.opendartannouncereceivebatch.Mapper;
 
 import com.example.opendartannouncereceivebatch.DTO.AnnouncePaidIncreaseElement;
+import com.example.opendartannouncereceivebatch.DTO.EssentialResponseElement;
 import com.example.opendartannouncereceivebatch.Entity.AnnouncePaidIncrease;
-import org.mapstruct.*;
+import com.example.opendartannouncereceivebatch.Entity.EssentialReport;
+import lombok.extern.slf4j.Slf4j;
 
-@Mapper(
-        componentModel = "spring", // 빌드 시 구현체 만들고 빈으로 등록
-        injectionStrategy = InjectionStrategy.CONSTRUCTOR, // 생성자 주입 전략
-        unmappedTargetPolicy = ReportingPolicy.ERROR // 일치하지 않는 필드가 있으면 빌드 시 에러
-)
-public interface AnnouncePaidIncreaseMapper {
-    @Mappings({
-            @Mapping(target = "receptNumber", expression="java(java.lang.Long.parseLong(element.getRcept_no()))"),
-            @Mapping(target = "corpClass", source = "corp_cls"),
-            @Mapping(target = "corpCode", source = "corp_code"),
-            @Mapping(target = "corpName", source = "corp_name"),
-            @Mapping(target = "newNormalKindCount", expression="java(java.lang.Long.parseLong(element.getNstk_ostk_cnt()))"),
-            @Mapping(target = "newEtcKindCount", expression = "java(java.lang.Long.parseLong(element.getNstk_estk_cnt()))"),
-            @Mapping(target = "farValue", expression = "java(java.lang.Long.parseLong(element.getFv_ps()))"),
-            @Mapping(target = "capitalStockBeforeIncrease", expression = "java(java.lang.Long.parseLong(element.getBfic_tisstk_ostk()))"),
-            @Mapping(target = "capitalEtcStockBeforeIncrease", expression = "java(java.lang.Long.parseLong(element.getBfic_tisstk_estk()))"),
-            @Mapping(target = "fundForEquipment", expression = "java(java.lang.Long.parseLong(element.getFdpp_fclt()))"),
-            @Mapping(target = "fundForTransfer", expression = "java(java.lang.Long.parseLong(element.getFdpp_bsninh()))"),
-            @Mapping(target = "fundForOperation", expression = "java(java.lang.Long.parseLong(element.getFdpp_op()))"),
-            @Mapping(target = "fundForRedemption", expression = "java(java.lang.Long.parseLong(element.getFdpp_dtrp()))"),
-            @Mapping(target = "fundForSecurityAcquisition", expression = "java(java.lang.Long.parseLong(element.getFdpp_ocsa()))"),
-            @Mapping(target = "fundForEtc", expression = "java(java.lang.Long.parseLong(element.getFdpp_etc()))"),
-            @Mapping(target = "increaseMethod", source = "ic_mthn"),
-            @Mapping(target = "shortSellingStatus", source = "ssl_at"),
-            @Mapping(target = "shortSellingBeginDate", expression = "java(java.time.LocalDate.parse(element.getSsl_bgd(),java.time.format.DateTimeFormatter.ofPattern(\"yyyyMMdd\")))"),
-            @Mapping(target = "shortSellingEndDate", expression = "java(java.time.LocalDate.parse(element.getSsl_edd(),java.time.format.DateTimeFormatter.ofPattern(\"yyyyMMdd\")))")
-    })
-    AnnouncePaidIncrease from(AnnouncePaidIncreaseElement element);
+import java.time.format.DateTimeParseException;
+
+
+@Slf4j
+public class AnnouncePaidIncreaseMapper implements EssentialMapper {
+    //AnnouncePaidIncrease AnnouncePaidIncreaseElement
+    @Override
+    public EssentialReport from(EssentialResponseElement element){
+        if ( element == null ) {
+            return null;
+        }
+        AnnouncePaidIncreaseElement announcePaidIncreaseElement = (AnnouncePaidIncreaseElement) element;
+        AnnouncePaidIncrease.AnnouncePaidIncreaseBuilder announcePaidIncrease = AnnouncePaidIncrease.builder();
+
+        announcePaidIncrease.corpClass( announcePaidIncreaseElement.getCorp_cls() );
+        announcePaidIncrease.corpCode( announcePaidIncreaseElement.getCorp_code() );
+        announcePaidIncrease.corpName( announcePaidIncreaseElement.getCorp_name() );
+        announcePaidIncrease.increaseMethod( announcePaidIncreaseElement.getIc_mthn() );
+        announcePaidIncrease.shortSellingStatus( announcePaidIncreaseElement.getSsl_at() );
+        try {
+            announcePaidIncrease.receptNumber(java.lang.Long.parseLong(announcePaidIncreaseElement.getRcept_no()));
+        } catch(NumberFormatException e){
+            log.info(announcePaidIncreaseElement.getRcept_no());
+            announcePaidIncrease.receptNumber(null);
+        }
+        try {
+            announcePaidIncrease.newNormalKindCount(java.lang.Long.parseLong(announcePaidIncreaseElement.getNstk_ostk_cnt()));
+        } catch(NumberFormatException e){
+            announcePaidIncrease.receptNumber(null);
+        }
+        try {
+            announcePaidIncrease.newEtcKindCount(java.lang.Long.parseLong(announcePaidIncreaseElement.getNstk_estk_cnt()));
+        } catch(NumberFormatException e){
+            announcePaidIncrease.receptNumber(null);
+        }
+        try {
+            announcePaidIncrease.farValue( java.lang.Long.parseLong(announcePaidIncreaseElement.getFv_ps()) );
+        } catch(NumberFormatException e){
+            announcePaidIncrease.receptNumber(null);
+        }
+        try{
+            announcePaidIncrease.capitalStockBeforeIncrease( java.lang.Long.parseLong(announcePaidIncreaseElement.getBfic_tisstk_ostk()) );
+        } catch(NumberFormatException e){
+            announcePaidIncrease.receptNumber(null);
+        }
+        try{
+            announcePaidIncrease.capitalEtcStockBeforeIncrease( java.lang.Long.parseLong(announcePaidIncreaseElement.getBfic_tisstk_estk()) );
+        } catch(NumberFormatException e){
+            announcePaidIncrease.receptNumber(null);
+        }
+        try {
+            announcePaidIncrease.fundForEquipment( java.lang.Long.parseLong(announcePaidIncreaseElement.getFdpp_fclt()) );
+        } catch(NumberFormatException e){
+            announcePaidIncrease.receptNumber(null);
+        }
+        try {
+            announcePaidIncrease.fundForTransfer( java.lang.Long.parseLong(announcePaidIncreaseElement.getFdpp_bsninh()) );
+        } catch(NumberFormatException e){
+            announcePaidIncrease.receptNumber(null);
+        }
+        try {
+            announcePaidIncrease.fundForOperation( java.lang.Long.parseLong(announcePaidIncreaseElement.getFdpp_op()) );
+        } catch(NumberFormatException e){
+            announcePaidIncrease.receptNumber(null);
+        }
+        try{
+            announcePaidIncrease.fundForRedemption( java.lang.Long.parseLong(announcePaidIncreaseElement.getFdpp_dtrp()) );
+        } catch(NumberFormatException e){
+            announcePaidIncrease.receptNumber(null);
+        }
+        try {
+            announcePaidIncrease.fundForSecurityAcquisition( java.lang.Long.parseLong(announcePaidIncreaseElement.getFdpp_ocsa()) );
+        } catch(NumberFormatException e){
+            announcePaidIncrease.receptNumber(null);
+        }
+        try {
+            announcePaidIncrease.fundForEtc( java.lang.Long.parseLong(announcePaidIncreaseElement.getFdpp_etc()) );
+        } catch(NumberFormatException e){
+            announcePaidIncrease.receptNumber(null);
+        }
+        try {
+            announcePaidIncrease.shortSellingBeginDate( java.time.LocalDate.parse(announcePaidIncreaseElement.getSsl_bgd(),java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd")) );
+        } catch(DateTimeParseException e){
+            announcePaidIncrease.receptNumber(null);
+        }
+        try {
+            announcePaidIncrease.shortSellingEndDate( java.time.LocalDate.parse(announcePaidIncreaseElement.getSsl_edd(),java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd")) );
+        } catch(DateTimeParseException e){
+            announcePaidIncrease.receptNumber(null);
+        }
+
+        return announcePaidIncrease.build();
+    }
+
 }

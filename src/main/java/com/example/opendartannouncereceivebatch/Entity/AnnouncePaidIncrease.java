@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 @ToString
-public class AnnouncePaidIncrease {
+public class AnnouncePaidIncrease implements EssentialReport {
     @Id
     private Long receptNumber;  // rcept_no : 접수번호
     private String corpClass;  // corp_cls : 법인구분
