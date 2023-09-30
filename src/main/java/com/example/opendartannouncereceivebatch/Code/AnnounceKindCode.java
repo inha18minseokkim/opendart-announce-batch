@@ -19,10 +19,11 @@ public enum AnnounceKindCode {
     Class<? extends EssentialResponseElement> responseClass;
     /*entity 사용 객체*/
     Class<? extends EssentialReport> entityClass;
-
+    /*ResponseElement -> Entity 매핑 인터페이스 클래스 타입*/
     Class<?> mapperInterface;
-
+    /*Repository 접근하는 EssentialWriter클래스*/
     Class<? extends EssentialWriter> essentialWriter;
+
 
     AnnounceKindCode(String uri, Class<? extends EssentialResponseElement> responseClass,
                      Class<? extends EssentialReport> entityClass, Class<?> mapperInterface,

@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface CorpCodeReader {
     List<CorpInfo> getTargetCorpList(List<String> corpNameList);
+
 }

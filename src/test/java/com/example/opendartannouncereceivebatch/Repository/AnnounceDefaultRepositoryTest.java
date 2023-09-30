@@ -1,16 +1,20 @@
 package com.example.opendartannouncereceivebatch.Repository;
 
 import com.example.opendartannouncereceivebatch.Entity.AnnounceDefault;
+import net.bytebuddy.asm.Advice;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+@SpringBootTest(args = {"--beginDate=20230818","--endDate=20230818"})
 class AnnounceDefaultRepositoryTest {
+
     @Autowired
     private AnnounceDefaultRepository announceDefaultRepository;
 
@@ -19,6 +23,15 @@ class AnnounceDefaultRepositoryTest {
         List<AnnounceDefault> announceDefaultList = announceDefaultRepository.findAll();
         System.out.println(announceDefaultList.size());
         assertNotEquals(announceDefaultList.size(),0);
+    }
+
+    @Test
+    @Transactional
+    public void announceBetweenDateTest() {
+        LocalDate startDate = LocalDate.of(2023,9,10);
+        LocalDate endDate = LocalDate.of(2023,9,20);
+        announceDefaultRepository.findByReceptDateBetween(startDate,endDate).forEach(System.out::println);
+
     }
 
 }
