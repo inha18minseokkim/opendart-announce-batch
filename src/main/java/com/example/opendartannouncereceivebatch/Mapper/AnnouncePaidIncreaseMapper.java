@@ -28,75 +28,74 @@ public class AnnouncePaidIncreaseMapper implements EssentialMapper {
         try {
             announcePaidIncrease.receptNumber(java.lang.Long.parseLong(announcePaidIncreaseElement.getRcept_no()));
         } catch(NumberFormatException e){
-            log.info(announcePaidIncreaseElement.getRcept_no());
+            log.error(announcePaidIncreaseElement.getRcept_no());
             announcePaidIncrease.receptNumber(null);
         }
         try {
             announcePaidIncrease.newNormalKindCount(java.lang.Long.parseLong(announcePaidIncreaseElement.getNstk_ostk_cnt()));
         } catch(NumberFormatException e){
-            announcePaidIncrease.receptNumber(null);
+            announcePaidIncrease.newNormalKindCount(null);
         }
         try {
             announcePaidIncrease.newEtcKindCount(java.lang.Long.parseLong(announcePaidIncreaseElement.getNstk_estk_cnt()));
         } catch(NumberFormatException e){
-            announcePaidIncrease.receptNumber(null);
+            announcePaidIncrease.newEtcKindCount(null);
         }
         try {
             announcePaidIncrease.farValue( java.lang.Long.parseLong(announcePaidIncreaseElement.getFv_ps()) );
         } catch(NumberFormatException e){
-            announcePaidIncrease.receptNumber(null);
+            announcePaidIncrease.farValue(null);
         }
         try{
             announcePaidIncrease.capitalStockBeforeIncrease( java.lang.Long.parseLong(announcePaidIncreaseElement.getBfic_tisstk_ostk()) );
         } catch(NumberFormatException e){
-            announcePaidIncrease.receptNumber(null);
+            announcePaidIncrease.capitalStockBeforeIncrease(null);
         }
         try{
             announcePaidIncrease.capitalEtcStockBeforeIncrease( java.lang.Long.parseLong(announcePaidIncreaseElement.getBfic_tisstk_estk()) );
         } catch(NumberFormatException e){
-            announcePaidIncrease.receptNumber(null);
+            announcePaidIncrease.capitalEtcStockBeforeIncrease(null);
         }
         try {
             announcePaidIncrease.fundForEquipment( java.lang.Long.parseLong(announcePaidIncreaseElement.getFdpp_fclt()) );
         } catch(NumberFormatException e){
-            announcePaidIncrease.receptNumber(null);
+            announcePaidIncrease.fundForEquipment(null);
         }
         try {
             announcePaidIncrease.fundForTransfer( java.lang.Long.parseLong(announcePaidIncreaseElement.getFdpp_bsninh()) );
         } catch(NumberFormatException e){
-            announcePaidIncrease.receptNumber(null);
+            announcePaidIncrease.fundForTransfer(null);
         }
         try {
             announcePaidIncrease.fundForOperation( java.lang.Long.parseLong(announcePaidIncreaseElement.getFdpp_op()) );
         } catch(NumberFormatException e){
-            announcePaidIncrease.receptNumber(null);
+            announcePaidIncrease.fundForOperation(null);
         }
         try{
             announcePaidIncrease.fundForRedemption( java.lang.Long.parseLong(announcePaidIncreaseElement.getFdpp_dtrp()) );
         } catch(NumberFormatException e){
-            announcePaidIncrease.receptNumber(null);
+            announcePaidIncrease.fundForRedemption(null);
         }
         try {
             announcePaidIncrease.fundForSecurityAcquisition( java.lang.Long.parseLong(announcePaidIncreaseElement.getFdpp_ocsa()) );
         } catch(NumberFormatException e){
-            announcePaidIncrease.receptNumber(null);
+            announcePaidIncrease.fundForSecurityAcquisition(null);
         }
         try {
             announcePaidIncrease.fundForEtc( java.lang.Long.parseLong(announcePaidIncreaseElement.getFdpp_etc()) );
         } catch(NumberFormatException e){
-            announcePaidIncrease.receptNumber(null);
+            announcePaidIncrease.fundForEtc(null);
         }
         try {
             announcePaidIncrease.shortSellingBeginDate( java.time.LocalDate.parse(announcePaidIncreaseElement.getSsl_bgd(),java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd")) );
         } catch(DateTimeParseException e){
-            announcePaidIncrease.receptNumber(null);
+            announcePaidIncrease.shortSellingBeginDate(null);
         }
         try {
             announcePaidIncrease.shortSellingEndDate( java.time.LocalDate.parse(announcePaidIncreaseElement.getSsl_edd(),java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd")) );
         } catch(DateTimeParseException e){
-            announcePaidIncrease.receptNumber(null);
+            announcePaidIncrease.shortSellingEndDate(null);
         }
-
         return announcePaidIncrease.build();
     }
 

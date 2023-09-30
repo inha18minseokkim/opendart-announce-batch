@@ -1,37 +1,26 @@
-package com.example.opendartannouncereceivebatch.Business;
+package com.example.opendartannouncereceivebatch.Writer;
 
-import com.example.opendartannouncereceivebatch.Code.AnnounceKindCode;
 import com.example.opendartannouncereceivebatch.DTO.AnnouncePaidIncreaseElement;
 import com.example.opendartannouncereceivebatch.Entity.AnnouncePaidIncrease;
 import com.example.opendartannouncereceivebatch.Entity.EssentialReport;
 import com.example.opendartannouncereceivebatch.Mapper.AnnouncePaidIncreaseMapper;
 import com.example.opendartannouncereceivebatch.Repository.AnnouncePaidIncreaseRepository;
-import com.example.opendartannouncereceivebatch.Writer.PaidIncreaseWriter;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
 
-import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.lang.reflect.InvocationTargetException;
+
 
 @SpringBootTest(args = {"--beginDate=20230818","--endDate=20230818"})
-class EssentialApiReceiveTest {
+class PaidIncreaseWriterTest {
     @Autowired
-    private EssentialApiReceive essentialApiReceive;
+    private AnnouncePaidIncreaseRepository announcePaidIncreaseRepository;
+//    @Autowired
+//    private PaidIncreaseWriter paidIncreaseWriter;
     @Test
-    public void paidIncreaseApiReceive() {
-        Stream<?> essentialAnnouncement = essentialApiReceive.getEssentialAnnouncement("20190101", "20191231", "00378363", AnnounceKindCode.PAIDINCREASE);
-        essentialAnnouncement.forEach((object) -> {
-            System.out.println(object.toString());
-            System.out.println(object.getClass());
-            assertEquals(object.getClass(),AnnounceKindCode.PAIDINCREASE.getResponseClass());
-        });
-    }
-
-    @Test
-    public void paidIncreaseSaveTest() {
+    public void insertPaidIncreaseReport() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, InstantiationException {
         AnnouncePaidIncreaseElement announcePaidIncreaseElement = AnnouncePaidIncreaseElement.builder()
                 .rcept_no("20190221000921").corp_cls("K").corp_code("00378363")
                 .corp_name("3S").nstk_ostk_cnt("376,265").nstk_estk_cnt("-")
@@ -40,12 +29,12 @@ class EssentialApiReceiveTest {
                 .fdpp_ocsa("-").fdpp_etc("3,000,000").ic_mthn("제3자배정증자").ssl_at("-")
                 .ssl_bgd("-").ssl_edd("-")
                 .build();
+        announcePaidIncreaseElement = (AnnouncePaidIncreaseElement) announcePaidIncreaseElement.getRefinedElement();
         System.out.println(announcePaidIncreaseElement);
         AnnouncePaidIncreaseMapper announcePaidIncreaseMapper = new AnnouncePaidIncreaseMapper();
+        EssentialReport from = announcePaidIncreaseMapper.from(announcePaidIncreaseElement);
+        System.out.println(from);
 
-        Stream<? extends EssentialReport> essentialAnnouncement = Stream.of(announcePaidIncreaseElement)
-                .map(announcePaidIncreaseMapper::from);
-        Integer integer = essentialApiReceive.saveRepository(essentialAnnouncement, AnnounceKindCode.PAIDINCREASE);
-        System.out.println(integer);
+        announcePaidIncreaseRepository.save((AnnouncePaidIncrease) from);
     }
 }

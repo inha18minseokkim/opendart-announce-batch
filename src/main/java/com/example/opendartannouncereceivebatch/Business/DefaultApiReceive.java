@@ -49,7 +49,7 @@ public class DefaultApiReceive {
         Mono<AnnounceDefaultResponse> result = webClient.get().retrieve()
                 .bodyToMono(AnnounceDefaultResponse.class);
 
-        log.info(result.toString());
+        //log.info(result.toString());
         return result;
     }
     /*
@@ -82,7 +82,7 @@ public class DefaultApiReceive {
         while (true) {
             AnnounceDefaultResponse block = this.getCurrentCorpAnnounce(Optional.ofNullable(null), beginDate, endDate, pageNumber).block();
             tempResponse.add(block);
-            log.info(block.getTotal_page() + " : " + pageNumber);
+            //log.info(block.getTotal_page() + " : " + pageNumber);
             if(block.getTotal_page() == pageNumber) break;
             pageNumber++;
         }

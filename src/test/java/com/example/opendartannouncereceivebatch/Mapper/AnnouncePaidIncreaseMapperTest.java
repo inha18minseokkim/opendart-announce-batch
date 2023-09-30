@@ -1,6 +1,7 @@
 package com.example.opendartannouncereceivebatch.Mapper;
 
 import com.example.opendartannouncereceivebatch.DTO.AnnouncePaidIncreaseElement;
+import com.example.opendartannouncereceivebatch.Entity.AnnouncePaidIncrease;
 import com.example.opendartannouncereceivebatch.Entity.EssentialReport;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +23,9 @@ class AnnouncePaidIncreaseMapperTest {
         System.out.println(announcePaidIncreaseElement);
         AnnouncePaidIncreaseMapper announcePaidIncreaseMapper = new AnnouncePaidIncreaseMapper();
         EssentialReport from = announcePaidIncreaseMapper.from(announcePaidIncreaseElement);
+        AnnouncePaidIncrease announcePaidIncrease = (AnnouncePaidIncrease) from;
         System.out.println(from);
+        System.out.println(announcePaidIncrease.getReceptNumber());
     }
 
 }

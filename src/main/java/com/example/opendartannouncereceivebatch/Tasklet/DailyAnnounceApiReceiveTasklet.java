@@ -32,7 +32,7 @@ public class DailyAnnounceApiReceiveTasklet implements Tasklet {
         log.info(String.format("%s ~ %s 모든 기업 공시정보 가져오기",beginDate,endDate));
         defaultApiReceive.getAnnouncementList(beginDate, endDate).filter((ele) -> ele!=null)
                 .map(announceDefaultMapper::from).forEach((announceDefault -> {
-            log.info(announceDefault.toString());
+            //log.info(announceDefault.toString());
             announceDefaultRepository.save(announceDefault);
         }));
 

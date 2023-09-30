@@ -3,10 +3,7 @@ package com.example.opendartannouncereceivebatch.Entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -14,6 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Getter
 @ToString
 public class AnnouncePaidIncrease implements EssentialReport {
     @Id
