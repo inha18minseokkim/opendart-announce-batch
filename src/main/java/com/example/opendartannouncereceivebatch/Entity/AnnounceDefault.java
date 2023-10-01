@@ -4,10 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -17,6 +14,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 @ToString
+@Getter
 public class AnnounceDefault {
 
     @Id
