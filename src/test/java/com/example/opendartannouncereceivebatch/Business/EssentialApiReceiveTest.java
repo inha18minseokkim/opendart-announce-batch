@@ -6,10 +6,12 @@ import com.example.opendartannouncereceivebatch.Entity.AnnouncePaidIncrease;
 import com.example.opendartannouncereceivebatch.Entity.EssentialReport;
 import com.example.opendartannouncereceivebatch.Mapper.AnnouncePaidIncreaseMapper;
 import com.example.opendartannouncereceivebatch.Repository.AnnouncePaidIncreaseRepository;
+import com.example.opendartannouncereceivebatch.Step.DefaultAnnouncementApiReceiveStepConfig;
 import com.example.opendartannouncereceivebatch.Writer.PaidIncreaseWriter;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.util.stream.Stream;
@@ -17,6 +19,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(args = {"--beginDate=20230818","--endDate=20230818"})
+@MockBean(classes = {DefaultAnnouncementApiReceiveStepConfig.class})
 class EssentialApiReceiveTest {
     @Autowired
     private EssentialApiReceive essentialApiReceive;
