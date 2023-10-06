@@ -1,16 +1,14 @@
 package com.example.opendartannouncereceivebatch.Business;
 
-import com.example.opendartannouncereceivebatch.Code.AnnounceKindCode;
 import com.example.opendartannouncereceivebatch.DTO.AnnounceDefaultElement;
 import com.example.opendartannouncereceivebatch.DTO.AnnounceDefaultResponse;
 import com.example.opendartannouncereceivebatch.Entity.CorpInfo;
 import com.example.opendartannouncereceivebatch.Reader.CorpCodeReaderTestImpl;
-import com.example.opendartannouncereceivebatch.Step.DefaultAnnouncementApiReceiveStepConfig;
+import com.example.opendartannouncereceivebatch.Job.DefaultAnnouncementApiReceiveJobConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ContextConfiguration;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -19,7 +17,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @SpringBootTest
-@MockBean(classes = {DefaultAnnouncementApiReceiveStepConfig.class})
+@MockBean(classes = {DefaultAnnouncementApiReceiveJobConfig.class})
 class DefaultApiReceiveTest {
     @Autowired
     private DefaultApiReceive defaultApiReceive;

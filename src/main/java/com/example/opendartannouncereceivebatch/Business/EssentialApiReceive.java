@@ -6,13 +6,11 @@ import com.example.opendartannouncereceivebatch.DTO.EssentialResponseElement;
 import com.example.opendartannouncereceivebatch.Entity.EssentialReport;
 import com.example.opendartannouncereceivebatch.Mapper.EssentialMapper;
 import com.example.opendartannouncereceivebatch.Writer.EssentialWriter;
-import com.example.opendartannouncereceivebatch.Writer.PaidIncreaseWriter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -48,6 +46,10 @@ public class EssentialApiReceive {
                 .bodyToMono(AnnounceEssentialResponse.class);
         AnnounceEssentialResponse block = result.block();
         List<Object> list = block.getList();
+        if(list == null || list.isEmpty()){
+            log.info(String.format("%s 에 대한 %s ~ %s 동안 %s 이벤트 없음",corpCode,beginDate,endDate,announceKindCode.getClass()));
+            return Stream.empty();
+        }
         ObjectMapper objectMapper = new ObjectMapper();
         log.info(list.toString());
         return list.stream().map(object -> objectMapper.convertValue(object, responseClass));

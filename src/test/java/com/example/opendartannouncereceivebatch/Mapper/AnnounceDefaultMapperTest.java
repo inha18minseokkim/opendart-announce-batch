@@ -2,7 +2,7 @@ package com.example.opendartannouncereceivebatch.Mapper;
 
 import com.example.opendartannouncereceivebatch.DTO.AnnounceDefaultElement;
 import com.example.opendartannouncereceivebatch.Entity.AnnounceDefault;
-import com.example.opendartannouncereceivebatch.Step.DefaultAnnouncementApiReceiveStepConfig;
+import com.example.opendartannouncereceivebatch.Job.DefaultAnnouncementApiReceiveJobConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @SpringBootTest
-@MockBean(classes = {DefaultAnnouncementApiReceiveStepConfig.class})
+@MockBean(classes = {DefaultAnnouncementApiReceiveJobConfig.class})
 class AnnounceDefaultMapperTest {
 
     @Autowired

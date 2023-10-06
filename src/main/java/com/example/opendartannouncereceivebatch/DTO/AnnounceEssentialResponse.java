@@ -3,6 +3,7 @@ package com.example.opendartannouncereceivebatch.DTO;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Getter

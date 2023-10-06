@@ -7,6 +7,7 @@ import com.example.opendartannouncereceivebatch.Entity.AnnounceDefault;
 import com.example.opendartannouncereceivebatch.Entity.EssentialReport;
 import com.example.opendartannouncereceivebatch.Reader.AnnounceDefaultReader;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
@@ -14,11 +15,11 @@ import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.stereotype.Component;
 
-import java.util.function.Function;
 import java.util.stream.Stream;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class PaidIncreaseReceiveTasklet implements Tasklet {
     private final ApplicationArguments applicationArguments;
     private final AnnounceDefaultReader announceDefaultReader;
@@ -30,12 +31,15 @@ public class PaidIncreaseReceiveTasklet implements Tasklet {
         String endDate = applicationArguments.getOptionValues("endDate").get(0);
 
         Stream<AnnounceDefault> announceStream = announceDefaultReader.getAnnounceList(beginDate, endDate)
+                .filter((AnnounceDefault element) -> element.getReportName().contains("주요사항"))
                 .filter((AnnounceDefault element) -> element.getReportName().contains("증자"))
                 .filter((AnnounceDefault element) -> element.getReportName().contains("유상"));
 
-        Stream<? extends EssentialResponseElement> elementStream = announceStream.map((AnnounceDefault element) ->
-                essentialApiReceive.getEssentialAnnouncement(beginDate, endDate, element.getCorpCode(), AnnounceKindCode.PAIDINCREASE)
-        ).flatMap(Function.identity());
+        Stream<? extends EssentialResponseElement> elementStream = announceStream.flatMap((AnnounceDefault element) -> {
+                log.info(element.getCorpCode() + " : " + element.getReportName() + " 에 대한 호출 진행");
+                return essentialApiReceive.getEssentialAnnouncement(beginDate, endDate, element.getCorpCode(), AnnounceKindCode.PAIDINCREASE);
+                }
+        ).map(EssentialResponseElement::getRefinedElement);
 
         Stream<? extends EssentialReport> entityStream = essentialApiReceive.convertToEntity(elementStream, AnnounceKindCode.PAIDINCREASE);
 

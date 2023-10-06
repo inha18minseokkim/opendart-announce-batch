@@ -4,23 +4,19 @@ import com.example.opendartannouncereceivebatch.DTO.AnnouncePaidIncreaseElement;
 import com.example.opendartannouncereceivebatch.Entity.AnnouncePaidIncrease;
 import com.example.opendartannouncereceivebatch.Entity.EssentialReport;
 import com.example.opendartannouncereceivebatch.Mapper.AnnouncePaidIncreaseMapper;
-import com.example.opendartannouncereceivebatch.OpendartAnnouncereceiveBatchApplication;
 import com.example.opendartannouncereceivebatch.Repository.AnnouncePaidIncreaseRepository;
-import com.example.opendartannouncereceivebatch.Step.DefaultAnnouncementApiReceiveStepConfig;
+import com.example.opendartannouncereceivebatch.Job.DefaultAnnouncementApiReceiveJobConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.FilterType;
 
 
 import java.lang.reflect.InvocationTargetException;
 
 
 @SpringBootTest(args = {"--beginDate=20230818","--endDate=20230818"})
-@MockBean(classes = {DefaultAnnouncementApiReceiveStepConfig.class})
+@MockBean(classes = {DefaultAnnouncementApiReceiveJobConfig.class})
 class PaidIncreaseWriterTest {
     @Autowired
     private AnnouncePaidIncreaseRepository announcePaidIncreaseRepository;

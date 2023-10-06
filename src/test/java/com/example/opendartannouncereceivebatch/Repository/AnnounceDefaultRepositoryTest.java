@@ -1,8 +1,7 @@
 package com.example.opendartannouncereceivebatch.Repository;
 
 import com.example.opendartannouncereceivebatch.Entity.AnnounceDefault;
-import com.example.opendartannouncereceivebatch.Step.DefaultAnnouncementApiReceiveStepConfig;
-import net.bytebuddy.asm.Advice;
+import com.example.opendartannouncereceivebatch.Job.DefaultAnnouncementApiReceiveJobConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,7 +14,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(args = {"--beginDate=20230818","--endDate=20230818"})
-@MockBean(classes = {DefaultAnnouncementApiReceiveStepConfig.class})
+@MockBean(classes = {DefaultAnnouncementApiReceiveJobConfig.class})
 class AnnounceDefaultRepositoryTest {
 
     @Autowired
