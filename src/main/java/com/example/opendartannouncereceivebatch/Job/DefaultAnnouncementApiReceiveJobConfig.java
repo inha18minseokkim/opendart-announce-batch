@@ -1,6 +1,7 @@
 package com.example.opendartannouncereceivebatch.Job;
 
 import com.example.opendartannouncereceivebatch.Tasklet.DailyAnnounceApiReceiveTasklet;
+import com.example.opendartannouncereceivebatch.Tasklet.FreeIssueReceiveTasklet;
 import com.example.opendartannouncereceivebatch.Tasklet.PaidIncreaseReceiveTasklet;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 public class DefaultAnnouncementApiReceiveJobConfig {
     private final DailyAnnounceApiReceiveTasklet dailyAnnounceApiReceiveTasklet;
     private final PaidIncreaseReceiveTasklet paidIncreaseReceiveTasklet;
+    private final FreeIssueReceiveTasklet freeIssueReceiveTasklet;
     private final ApplicationArguments applicationArguments;
 
     @Bean
@@ -34,6 +36,7 @@ public class DefaultAnnouncementApiReceiveJobConfig {
         Job exampleJob = new JobBuilder(String.format("dailyReceiveJob%s%s",beginDate,endDate),jobRepository)
                 .start(dailyReceiveStep(jobRepository,dailyAnnounceApiReceiveTasklet,transactionManager))
                 .next(dailyPaidIncreaseReceiveStep(jobRepository, paidIncreaseReceiveTasklet, transactionManager))
+                .next(dailyFreeIssueReceiveStep(jobRepository,freeIssueReceiveTasklet,transactionManager))
                 .build();
         return exampleJob;
     }
@@ -59,6 +62,18 @@ public class DefaultAnnouncementApiReceiveJobConfig {
         String endDate = applicationArguments.getOptionValues("endDate").get(0);
         log.info(String.format("%s ~ %s dailyPaidIncreaseReceiveStep 실행",beginDate,endDate));
         return new StepBuilder("dailyPaidIncreaseReceiveStep",jobRepository)
+                .tasklet(defaultTasklet,transactionManager).build();
+    }
+
+    @Bean
+    @JobScope
+    public Step dailyFreeIssueReceiveStep(JobRepository jobRepository
+    , FreeIssueReceiveTasklet defaultTasklet
+    , PlatformTransactionManager transactionManager) {
+        String beginDate = applicationArguments.getOptionValues("beginDate").get(0);
+        String endDate = applicationArguments.getOptionValues("endDate").get(0);
+        log.info(String.format("%s ~ %s dailyFreeIssueReceiveStep 실행",beginDate,endDate));
+        return new StepBuilder("dailyFreeIssueReceiveStep",jobRepository)
                 .tasklet(defaultTasklet,transactionManager).build();
     }
 

@@ -28,6 +28,10 @@ public interface EssentialResponseElement {
                     if(o == null) continue;
                     //숫자 및 없는 정보는 null로 만들기 위한 정제작업
                     field.set(essentialResponseElement,o.replace("-","")
+                                    .replace("년","")
+                                    .replace("월","")
+                                    .replace("일","")
+                                    .replace(" ","")
                             .replace(",","").trim());
                 } catch (IllegalAccessException e) {
                     throw new RuntimeException(e);
