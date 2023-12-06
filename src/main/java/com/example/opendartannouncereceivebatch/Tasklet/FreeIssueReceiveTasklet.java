@@ -2,7 +2,7 @@ package com.example.opendartannouncereceivebatch.Tasklet;
 
 import com.example.opendartannouncereceivebatch.Business.EssentialApiReceive;
 import com.example.opendartannouncereceivebatch.Code.AnnounceKindCode;
-import com.example.opendartannouncereceivebatch.DTO.EssentialResponseElement;
+import com.example.opendartannouncereceivebatch.DTO.ListElement.EssentialResponseElement;
 import com.example.opendartannouncereceivebatch.Entity.AnnounceDefault;
 import com.example.opendartannouncereceivebatch.Entity.EssentialReport;
 import com.example.opendartannouncereceivebatch.Reader.AnnounceDefaultReader;
@@ -31,19 +31,19 @@ public class FreeIssueReceiveTasklet implements Tasklet {
         String endDate = applicationArguments.getOptionValues("endDate").get(0);
 
         Stream<AnnounceDefault> announceStream = announceDefaultReader.getAnnounceList(beginDate, endDate)
-                .filter((AnnounceDefault element) -> element.getReportName().contains("주요사항"))
-                .filter((AnnounceDefault element) -> element.getReportName().contains("증자"))
-                .filter((AnnounceDefault element) -> element.getReportName().contains("무상"));
+                .filter((AnnounceDefault element) -> element.getReport_nm().contains("주요사항"))
+                .filter((AnnounceDefault element) -> element.getReport_nm().contains("증자"))
+                .filter((AnnounceDefault element) -> element.getReport_nm().contains("무상"));
 
         Stream<? extends EssentialResponseElement> elementStream = announceStream.flatMap((AnnounceDefault element) -> {
-                    log.info(element.getCorpCode() + " : " + element.getReportName() + " 에 대한 호출 진행");
-                    return essentialApiReceive.getEssentialAnnouncement(beginDate, endDate, element.getCorpCode(), AnnounceKindCode.FreeIssue);
+                    log.info(element.getCorp_code() + " : " + element.getReport_nm() + " 에 대한 호출 진행");
+                    return essentialApiReceive.getEssentialAnnouncement(beginDate, endDate, element.getCorp_code(), AnnounceKindCode.FREE_ISSUE);
                 }
         ).map(EssentialResponseElement::getRefinedElement);
 
-        Stream<? extends EssentialReport> entityStream = essentialApiReceive.convertToEntity(elementStream, AnnounceKindCode.FreeIssue);
+        Stream<? extends EssentialReport> entityStream = essentialApiReceive.convertToEntity(elementStream, AnnounceKindCode.FREE_ISSUE);
 
-        Integer integer = essentialApiReceive.saveRepository(entityStream, AnnounceKindCode.FreeIssue);
+        Integer integer = essentialApiReceive.saveRepository(entityStream, AnnounceKindCode.FREE_ISSUE);
 
         return RepeatStatus.FINISHED;
 

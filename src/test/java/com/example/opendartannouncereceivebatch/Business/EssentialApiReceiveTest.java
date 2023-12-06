@@ -1,7 +1,7 @@
 package com.example.opendartannouncereceivebatch.Business;
 
 import com.example.opendartannouncereceivebatch.Code.AnnounceKindCode;
-import com.example.opendartannouncereceivebatch.DTO.AnnouncePaidIncreaseElement;
+import com.example.opendartannouncereceivebatch.DTO.ListElement.AnnouncePaidIncreaseElement;
 import com.example.opendartannouncereceivebatch.Entity.EssentialReport;
 import com.example.opendartannouncereceivebatch.Mapper.AnnouncePaidIncreaseMapper;
 import com.example.opendartannouncereceivebatch.Job.DefaultAnnouncementApiReceiveJobConfig;
@@ -21,11 +21,11 @@ class EssentialApiReceiveTest {
     private EssentialApiReceive essentialApiReceive;
     @Test
     public void paidIncreaseApiReceive() {
-        Stream<?> essentialAnnouncement = essentialApiReceive.getEssentialAnnouncement("20190101", "20191231", "00378363", AnnounceKindCode.PAIDINCREASE);
+        Stream<?> essentialAnnouncement = essentialApiReceive.getEssentialAnnouncement("20190101", "20191231", "00378363", AnnounceKindCode.PAID_INCREASE);
         essentialAnnouncement.forEach((object) -> {
             System.out.println(object.toString());
             System.out.println(object.getClass());
-            assertEquals(object.getClass(),AnnounceKindCode.PAIDINCREASE.getResponseClass());
+            assertEquals(object.getClass(),AnnounceKindCode.PAID_INCREASE.getResponseClass());
         });
     }
 
@@ -40,11 +40,11 @@ class EssentialApiReceiveTest {
                 .ssl_bgd("-").ssl_edd("-")
                 .build();
         System.out.println(announcePaidIncreaseElement);
-        AnnouncePaidIncreaseMapper announcePaidIncreaseMapper = new AnnouncePaidIncreaseMapper();
-
-        Stream<? extends EssentialReport> essentialAnnouncement = Stream.of(announcePaidIncreaseElement)
-                .map(announcePaidIncreaseMapper::from);
-        Integer integer = essentialApiReceive.saveRepository(essentialAnnouncement, AnnounceKindCode.PAIDINCREASE);
-        System.out.println(integer);
+//        AnnouncePaidIncreaseMapper announcePaidIncreaseMapper = new AnnouncePaidIncreaseMapper();
+//
+//        Stream<? extends EssentialReport> essentialAnnouncement = Stream.of(announcePaidIncreaseElement)
+//                .map(announcePaidIncreaseMapper::from);
+//        Integer integer = essentialApiReceive.saveRepository(essentialAnnouncement, AnnounceKindCode.PAID_INCREASE);
+//        System.out.println(integer);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.opendartannouncereceivebatch.DTO;
+package com.example.opendartannouncereceivebatch.DTO.ListElement;
 
 
 import lombok.*;

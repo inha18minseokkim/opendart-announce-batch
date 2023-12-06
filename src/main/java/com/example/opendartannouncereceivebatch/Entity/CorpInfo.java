@@ -7,7 +7,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-@Entity(name="TB_CORP_CODE")
+@Entity(name="corp_code")
 @Getter
 @Builder
 @AllArgsConstructor
@@ -15,14 +15,14 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class CorpInfo {
     @Id
-    @Column(name="IDX")
+    @Column(name="id")
     private Long id;
     @Column(name="corp_code")
-    private String corpCode;
+    private String corp_code;
     @Column(name="corp_name")
-    private String corpName;
+    private String corp_name;
     @Column(name="stock_code")
-    private String stockCode;
+    private String stock_code;
     @Column(name="modify_date")
     private LocalDate modify_date;
 }

@@ -1,13 +1,17 @@
 package com.example.opendartannouncereceivebatch.Code;
 
-import com.example.opendartannouncereceivebatch.DTO.AnnounceFreeIssueElement;
-import com.example.opendartannouncereceivebatch.DTO.AnnouncePaidIncreaseElement;
-import com.example.opendartannouncereceivebatch.DTO.EssentialResponseElement;
+import com.example.opendartannouncereceivebatch.DTO.ListElement.AnnounceCapitalReductionElement;
+import com.example.opendartannouncereceivebatch.DTO.ListElement.AnnounceFreeIssueElement;
+import com.example.opendartannouncereceivebatch.DTO.ListElement.AnnouncePaidIncreaseElement;
+import com.example.opendartannouncereceivebatch.DTO.ListElement.EssentialResponseElement;
+import com.example.opendartannouncereceivebatch.Entity.AnnounceCapitalReduction;
 import com.example.opendartannouncereceivebatch.Entity.AnnounceFreeIssue;
 import com.example.opendartannouncereceivebatch.Entity.AnnouncePaidIncrease;
 import com.example.opendartannouncereceivebatch.Entity.EssentialReport;
+import com.example.opendartannouncereceivebatch.Mapper.AnnounceCapitalReductionMapper;
 import com.example.opendartannouncereceivebatch.Mapper.AnnounceFreeIssueMapper;
 import com.example.opendartannouncereceivebatch.Mapper.AnnouncePaidIncreaseMapper;
+import com.example.opendartannouncereceivebatch.Writer.CapitalReductionWriter;
 import com.example.opendartannouncereceivebatch.Writer.EssentialWriter;
 import com.example.opendartannouncereceivebatch.Writer.FreeIssueWriter;
 import com.example.opendartannouncereceivebatch.Writer.PaidIncreaseWriter;
@@ -15,10 +19,16 @@ import lombok.Getter;
 
 @Getter
 public enum AnnounceKindCode {
-    PAIDINCREASE("https://opendart.fss.or.kr/api/piicDecsn.json",AnnouncePaidIncreaseElement.class,
+    /*유상증자*/
+    PAID_INCREASE("https://opendart.fss.or.kr/api/piicDecsn.json",AnnouncePaidIncreaseElement.class,
             AnnouncePaidIncrease.class, AnnouncePaidIncreaseMapper.class, PaidIncreaseWriter.class),
-    FreeIssue("https://opendart.fss.or.kr/api/fricDecsn.json",AnnounceFreeIssueElement.class,
-            AnnounceFreeIssue.class, AnnounceFreeIssueMapper.class, FreeIssueWriter.class);
+    /*무상증자*/
+    FREE_ISSUE("https://opendart.fss.or.kr/api/fricDecsn.json",AnnounceFreeIssueElement.class,
+            AnnounceFreeIssue.class, AnnounceFreeIssueMapper.class, FreeIssueWriter.class),
+    /*감자*/
+    CAPITAL_REDUCTION("https://opendart.fss.or.kr/api/crDecsn.json", AnnounceCapitalReductionElement.class,
+            AnnounceCapitalReduction.class, AnnounceCapitalReductionMapper.class, CapitalReductionWriter.class);
+
     /*호출 할 uri 저장*/
     String uri;
     /*response 시 list를 명세한 response객체*/

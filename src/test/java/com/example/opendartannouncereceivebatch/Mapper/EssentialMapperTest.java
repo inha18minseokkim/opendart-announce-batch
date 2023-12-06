@@ -1,13 +1,16 @@
-package com.example.opendartannouncereceivebatch.DTO;
+package com.example.opendartannouncereceivebatch.Mapper;
 
 import com.example.opendartannouncereceivebatch.DTO.ListElement.AnnouncePaidIncreaseElement;
+import com.example.opendartannouncereceivebatch.Entity.AnnouncePaidIncrease;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.InvocationTargetException;
+import static org.junit.jupiter.api.Assertions.*;
 
-class AnnouncePaidIncreaseElementTest {
+@Slf4j
+class EssentialMapperTest {
     @Test
-    public void ElementTest() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, InstantiationException {
+    void mappingTest() throws IllegalAccessException, InstantiationException {
         AnnouncePaidIncreaseElement announcePaidIncreaseElement = AnnouncePaidIncreaseElement.builder()
                 .rcept_no("20190221000921").corp_cls("K").corp_code("00378363")
                 .corp_name("3S").nstk_ostk_cnt("376,265").nstk_estk_cnt("-")
@@ -16,9 +19,8 @@ class AnnouncePaidIncreaseElementTest {
                 .fdpp_ocsa("-").fdpp_etc("3,000,000").ic_mthn("제3자배정증자").ssl_at("-")
                 .ssl_bgd("-").ssl_edd("-")
                 .build();
-        System.out.println(announcePaidIncreaseElement);
-        announcePaidIncreaseElement = (AnnouncePaidIncreaseElement) announcePaidIncreaseElement.getRefinedElement();
-        System.out.println(announcePaidIncreaseElement);
+        AnnouncePaidIncrease announcePaidIncrease = EssentialMapper.mapObjects(announcePaidIncreaseElement.getRefinedElement(), AnnouncePaidIncrease.class);
+        log.info(announcePaidIncrease.toString());
     }
 
 }

@@ -1,12 +1,9 @@
 package com.example.opendartannouncereceivebatch.Business;
 
-import com.example.opendartannouncereceivebatch.Code.AnnounceKindCode;
 import com.example.opendartannouncereceivebatch.DTO.AnnounceDefaultElement;
 import com.example.opendartannouncereceivebatch.DTO.AnnounceDefaultResponse;
-import com.example.opendartannouncereceivebatch.DTO.AnnounceEssentialResponse;
 import com.example.opendartannouncereceivebatch.Entity.CorpInfo;
 import com.example.opendartannouncereceivebatch.Reader.CorpCodeReader;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,7 +37,7 @@ public class DefaultApiReceive {
                 .queryParam("page_no",pageNumber)
                 .queryParam("page_count",100);
         if(corpInfo.isPresent())
-            uriComponentsBuilder = uriComponentsBuilder.queryParam("corp_code",corpInfo.get().getCorpCode());
+            uriComponentsBuilder = uriComponentsBuilder.queryParam("corp_code",corpInfo.get().getCorp_code());
 
         String url = uriComponentsBuilder.build().toUriString();
         log.info(url);

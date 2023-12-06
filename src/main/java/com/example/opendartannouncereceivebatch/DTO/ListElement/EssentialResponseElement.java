@@ -1,6 +1,5 @@
-package com.example.opendartannouncereceivebatch.DTO;
+package com.example.opendartannouncereceivebatch.DTO.ListElement;
 
-import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 

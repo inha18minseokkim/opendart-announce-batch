@@ -33,11 +33,11 @@ class PaidIncreaseReceiveTaskletTest {
         String endDate = applicationArguments.getOptionValues("endDate").get(0);
 
         announceDefaultReader.getAnnounceList(beginDate, endDate)
-                .filter((AnnounceDefault element) -> element.getReportName().contains("증자"))
-                .filter((AnnounceDefault element) -> element.getReportName().contains("유상"))
-                .filter((AnnounceDefault element) -> element.getReportName().contains("주요사항"))
+                .filter((AnnounceDefault element) -> element.getReport_nm().contains("증자"))
+                .filter((AnnounceDefault element) -> element.getReport_nm().contains("유상"))
+                .filter((AnnounceDefault element) -> element.getReport_nm().contains("주요사항"))
                         .forEach((element) -> {
-            System.out.println(element.getReportName());
+            System.out.println(element.getReport_nm());
         });
 
     }

@@ -2,7 +2,7 @@ package com.example.opendartannouncereceivebatch.Business;
 
 import com.example.opendartannouncereceivebatch.Code.AnnounceKindCode;
 import com.example.opendartannouncereceivebatch.DTO.AnnounceEssentialResponse;
-import com.example.opendartannouncereceivebatch.DTO.EssentialResponseElement;
+import com.example.opendartannouncereceivebatch.DTO.ListElement.EssentialResponseElement;
 import com.example.opendartannouncereceivebatch.Entity.EssentialReport;
 import com.example.opendartannouncereceivebatch.Mapper.EssentialMapper;
 import com.example.opendartannouncereceivebatch.Writer.EssentialWriter;
