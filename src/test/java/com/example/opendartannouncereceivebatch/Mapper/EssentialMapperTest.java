@@ -3,6 +3,8 @@ package com.example.opendartannouncereceivebatch.Mapper;
 import com.example.opendartannouncereceivebatch.DTO.ListElement.AnnouncePaidIncreaseElement;
 import com.example.opendartannouncereceivebatch.Entity.AnnouncePaidIncrease;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.api.Assert;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,6 +23,12 @@ class EssentialMapperTest {
                 .build();
         AnnouncePaidIncrease announcePaidIncrease = EssentialMapper.mapObjects(announcePaidIncreaseElement.getRefinedElement(), AnnouncePaidIncrease.class);
         log.info(announcePaidIncrease.toString());
+        Assertions.assertThat(announcePaidIncrease.getCorp_code()).isEqualTo(announcePaidIncreaseElement.getCorp_code());
+        Assertions.assertThat(announcePaidIncrease.getNstk_ostk_cnt()).isEqualTo(376265);
+        Assertions.assertThat(announcePaidIncrease.getBfic_tisstk_ostk()).isEqualTo(44395878);
+        Assertions.assertThat(announcePaidIncrease.getSsl_edd()).isNull();
+        Assertions.assertThat(announcePaidIncrease.getNstk_estk_cnt()).isNull();
+        Assertions.assertThat(announcePaidIncrease.getFdpp_fclt()).isNull();
     }
 
 }
