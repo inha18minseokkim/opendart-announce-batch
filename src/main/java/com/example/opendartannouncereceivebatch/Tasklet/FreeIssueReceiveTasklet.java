@@ -31,13 +31,13 @@ public class FreeIssueReceiveTasklet implements Tasklet {
         String endDate = applicationArguments.getOptionValues("endDate").get(0);
 
         Stream<AnnounceDefault> announceStream = announceDefaultReader.getAnnounceList(beginDate, endDate)
-                .filter((AnnounceDefault element) -> element.getReport_nm().contains("주요사항"))
-                .filter((AnnounceDefault element) -> element.getReport_nm().contains("증자"))
-                .filter((AnnounceDefault element) -> element.getReport_nm().contains("무상"));
+                .filter((AnnounceDefault element) -> element.getReportNm().contains("주요사항"))
+                .filter((AnnounceDefault element) -> element.getReportNm().contains("증자"))
+                .filter((AnnounceDefault element) -> element.getReportNm().contains("무상"));
 
         Stream<? extends EssentialResponseElement> elementStream = announceStream.flatMap((AnnounceDefault element) -> {
-                    log.info(element.getCorp_code() + " : " + element.getReport_nm() + " 에 대한 호출 진행");
-                    return essentialApiReceive.getEssentialAnnouncement(beginDate, endDate, element.getCorp_code(), AnnounceKindCode.FREE_ISSUE);
+                    log.info(element.getCorpCode() + " : " + element.getReportNm() + " 에 대한 호출 진행");
+                    return essentialApiReceive.getEssentialAnnouncement(beginDate, endDate, element.getCorpCode(), AnnounceKindCode.FREE_ISSUE);
                 }
         ).map(EssentialResponseElement::getRefinedElement);
 

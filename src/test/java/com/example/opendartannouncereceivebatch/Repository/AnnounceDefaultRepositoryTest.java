@@ -32,7 +32,7 @@ class AnnounceDefaultRepositoryTest {
     public void announceBetweenDateTest() {
         LocalDate startDate = LocalDate.of(2023,9,10);
         LocalDate endDate = LocalDate.of(2023,9,20);
-        announceDefaultRepository.findByReceptDateBetween(startDate,endDate).forEach(System.out::println);
+        announceDefaultRepository.findByRceptDtBetween(startDate,endDate).forEach(System.out::println);
 
     }
 

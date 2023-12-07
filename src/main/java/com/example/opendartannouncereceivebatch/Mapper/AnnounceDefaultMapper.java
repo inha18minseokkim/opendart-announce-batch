@@ -12,8 +12,8 @@ import org.mapstruct.*;
 public interface AnnounceDefaultMapper {
 
     @Mappings({
-            @Mapping(target="rcept_no",expression="java(java.lang.Long.parseLong(announceDefaultElement.getRcept_no()))"),
-            @Mapping(target="rcept_dt",expression = "java(java.time.LocalDate.parse(announceDefaultElement.getRcept_dt(), java.time.format.DateTimeFormatter.ofPattern(\"yyyyMMdd\")))")
+            @Mapping(target="rceptNo",expression="java(java.lang.Long.parseLong(announceDefaultElement.getRceptNo()))"),
+            @Mapping(target="rceptDt",expression = "java(java.time.LocalDate.parse(announceDefaultElement.getRceptDt(), java.time.format.DateTimeFormatter.ofPattern(\"yyyyMMdd\")))")
     })
     AnnounceDefault from(AnnounceDefaultElement announceDefaultElement);
 

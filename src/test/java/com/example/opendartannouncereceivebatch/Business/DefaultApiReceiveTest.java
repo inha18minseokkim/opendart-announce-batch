@@ -23,7 +23,8 @@ class DefaultApiReceiveTest {
     private DefaultApiReceive defaultApiReceive;
     @Test
     public void receive_api() {
-        CorpInfo corpInfo = CorpInfo.builder().corp_name("삼성전자").corp_code("005930").stock_code("005930").build();
+        CorpInfo corpInfo = CorpInfo.builder().corpName("삼성전자")
+                .corpCode("005930").stockCode("005930").build();
         Mono<AnnounceDefaultResponse> result = defaultApiReceive.getCurrentCorpAnnounce(Optional.of(corpInfo),"20230101","20230915",1);
         System.out.println("@@");
         AnnounceDefaultResponse tempResponse = result.block();

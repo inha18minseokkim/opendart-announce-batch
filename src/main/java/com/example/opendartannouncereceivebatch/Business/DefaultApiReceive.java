@@ -37,7 +37,7 @@ public class DefaultApiReceive {
                 .queryParam("page_no",pageNumber)
                 .queryParam("page_count",100);
         if(corpInfo.isPresent())
-            uriComponentsBuilder = uriComponentsBuilder.queryParam("corp_code",corpInfo.get().getCorp_code());
+            uriComponentsBuilder = uriComponentsBuilder.queryParam("corp_code",corpInfo.get().getCorpCode());
 
         String url = uriComponentsBuilder.build().toUriString();
         log.info(url);

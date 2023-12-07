@@ -16,13 +16,16 @@ class EssentialMapperTest {
     @Test
     void mappingTest() throws IllegalAccessException, InstantiationException {
         AnnouncePaidIncreaseElement announcePaidIncreaseElement = AnnouncePaidIncreaseElement.builder()
-                .rcept_no("20190221000921").corp_cls("K").corp_code("00378363")
-                .corp_name("3S").nstk_ostk_cnt("376,265").nstk_estk_cnt("-")
-                .fv_ps("500").bfic_tisstk_ostk("44,395,878").bfic_tisstk_estk("-")
-                .fdpp_fclt("-").fdpp_bsninh("-").fdpp_op("783,393,850").fdpp_dtrp("-")
-                .fdpp_ocsa("-").fdpp_etc("3,000,000").ic_mthn("제3자배정증자").ssl_at("-")
-                .ssl_bgd("-").ssl_edd("-")
-                .build();
+                .rceptNo("20190221000921").corpCls("K")
+                .corpCode("00378363")
+                .corpName("3S").nstkOstkCnt("376,265").nstkEstkCnt("")
+                .fvPs("500").bficTisstkOstk("44,395,878")
+                .bficTisstkEstk("").fdppFclt("")
+                .fdppBsninh("")
+                .fdppOp("783,393,850").fdppDtrp("")
+                .fdppOcsa("").fdppEtc("3,000,000").icMthn("제3자배정증자")
+                .sslAt("")
+                .sslBgd("").sslEdd("").build();
         EssentialMapper essentialMapper = new EssentialMapper() {
             @Override
             public EssentialReport from(EssentialResponseElement element) {
@@ -41,12 +44,12 @@ class EssentialMapperTest {
         };
         AnnouncePaidIncrease announcePaidIncrease = essentialMapper.mapObjects(announcePaidIncreaseElement.getRefinedElement(), AnnouncePaidIncrease.class);
         log.info(announcePaidIncrease.toString());
-        Assertions.assertThat(announcePaidIncrease.getCorp_code()).isEqualTo(announcePaidIncreaseElement.getCorp_code());
-        Assertions.assertThat(announcePaidIncrease.getNstk_ostk_cnt()).isEqualTo(376265);
-        Assertions.assertThat(announcePaidIncrease.getBfic_tisstk_ostk()).isEqualTo(44395878);
-        Assertions.assertThat(announcePaidIncrease.getSsl_edd()).isNull();
-        Assertions.assertThat(announcePaidIncrease.getNstk_estk_cnt()).isNull();
-        Assertions.assertThat(announcePaidIncrease.getFdpp_fclt()).isNull();
+        Assertions.assertThat(announcePaidIncrease.getCorpCode()).isEqualTo(announcePaidIncreaseElement.getCorpCode());
+        Assertions.assertThat(announcePaidIncrease.getNstkOstkCnt()).isEqualTo(376265);
+        Assertions.assertThat(announcePaidIncrease.getBficTisstkOstk()).isEqualTo(44395878);
+        Assertions.assertThat(announcePaidIncrease.getSslEdd()).isNull();
+        Assertions.assertThat(announcePaidIncrease.getNstkEstkCnt()).isNull();
+        Assertions.assertThat(announcePaidIncrease.getFdppFclt()).isNull();
     }
 
 }

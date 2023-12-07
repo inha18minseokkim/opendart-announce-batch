@@ -32,13 +32,16 @@ class EssentialApiReceiveTest {
     @Test
     public void paidIncreaseSaveTest() {
         AnnouncePaidIncreaseElement announcePaidIncreaseElement = AnnouncePaidIncreaseElement.builder()
-                .rcept_no("20190221000921").corp_cls("K").corp_code("00378363")
-                .corp_name("3S").nstk_ostk_cnt("376,265").nstk_estk_cnt("-")
-                .fv_ps("500").bfic_tisstk_ostk("44,395,878").bfic_tisstk_estk("-")
-                .fdpp_fclt("-").fdpp_bsninh("-").fdpp_op("783,393,850").fdpp_dtrp("-")
-                .fdpp_ocsa("-").fdpp_etc("3,000,000").ic_mthn("제3자배정증자").ssl_at("-")
-                .ssl_bgd("-").ssl_edd("-")
-                .build();
+                .rceptNo("20190221000921").corpCls("K")
+                        .corpCode("00378363")
+                        .corpName("3S").nstkOstkCnt("376,265").nstkEstkCnt("")
+                .fvPs("500").bficTisstkOstk("44,395,878")
+                .bficTisstkEstk("").fdppFclt("")
+                .fdppBsninh("")
+                .fdppOp("783,393,850").fdppDtrp("")
+                .fdppOcsa("").fdppEtc("3,000,000").icMthn("제3자배정증자")
+                .sslAt("")
+                .sslBgd("").sslEdd("").build();
         System.out.println(announcePaidIncreaseElement);
 //        AnnouncePaidIncreaseMapper announcePaidIncreaseMapper = new AnnouncePaidIncreaseMapper();
 //
