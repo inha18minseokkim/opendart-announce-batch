@@ -12,7 +12,7 @@ public interface EssentialMapper {
     public default EssentialReport from(EssentialResponseElement element){
         return null;
     }
-    public static <S, T> T mapObjects(S source, Class<T> targetType) throws IllegalAccessException, InstantiationException {
+    public default <S, T> T mapObjects(S source, Class<T> targetType) throws IllegalAccessException, InstantiationException {
         if (source == null) {
             return null;
         }
@@ -41,7 +41,7 @@ public interface EssentialMapper {
         return target;
     }
 
-    public static Object convert(Object value, Class<?> targetType) {
+    public default Object convert(Object value, Class<?> targetType) {
         try {
             if (targetType.equals(String.class)) {
                 return value.toString();

@@ -1,7 +1,9 @@
 package com.example.opendartannouncereceivebatch.Mapper;
 
 import com.example.opendartannouncereceivebatch.DTO.ListElement.AnnouncePaidIncreaseElement;
+import com.example.opendartannouncereceivebatch.DTO.ListElement.EssentialResponseElement;
 import com.example.opendartannouncereceivebatch.Entity.AnnouncePaidIncrease;
+import com.example.opendartannouncereceivebatch.Entity.EssentialReport;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assert;
 import org.assertj.core.api.Assertions;
@@ -21,7 +23,23 @@ class EssentialMapperTest {
                 .fdpp_ocsa("-").fdpp_etc("3,000,000").ic_mthn("제3자배정증자").ssl_at("-")
                 .ssl_bgd("-").ssl_edd("-")
                 .build();
-        AnnouncePaidIncrease announcePaidIncrease = EssentialMapper.mapObjects(announcePaidIncreaseElement.getRefinedElement(), AnnouncePaidIncrease.class);
+        EssentialMapper essentialMapper = new EssentialMapper() {
+            @Override
+            public EssentialReport from(EssentialResponseElement element) {
+                return EssentialMapper.super.from(element);
+            }
+
+            @Override
+            public <S, T> T mapObjects(S source, Class<T> targetType) throws IllegalAccessException, InstantiationException {
+                return EssentialMapper.super.mapObjects(source, targetType);
+            }
+
+            @Override
+            public Object convert(Object value, Class<?> targetType) {
+                return EssentialMapper.super.convert(value, targetType);
+            }
+        };
+        AnnouncePaidIncrease announcePaidIncrease = essentialMapper.mapObjects(announcePaidIncreaseElement.getRefinedElement(), AnnouncePaidIncrease.class);
         log.info(announcePaidIncrease.toString());
         Assertions.assertThat(announcePaidIncrease.getCorp_code()).isEqualTo(announcePaidIncreaseElement.getCorp_code());
         Assertions.assertThat(announcePaidIncrease.getNstk_ostk_cnt()).isEqualTo(376265);

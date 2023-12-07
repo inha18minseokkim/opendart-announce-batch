@@ -57,7 +57,15 @@ public class EssentialApiReceive {
     public Stream<? extends EssentialReport> convertToEntity(Stream<? extends EssentialResponseElement> elementStream,
                                                              AnnounceKindCode announceKindCode) throws InvocationTargetException, InstantiationException, IllegalAccessException {
         EssentialMapper essentialMapper = (EssentialMapper) announceKindCode.getMapperInterface().getConstructors()[0].newInstance();
-        return elementStream.map((essentialMapper::from));
+        return elementStream.map((element) -> {
+            try {
+                return (EssentialReport) essentialMapper.mapObjects(element,announceKindCode.getEntityClass());
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            } catch (InstantiationException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
     public Integer saveRepository(Stream<? extends EssentialReport> stream, AnnounceKindCode announceKindCode) {
         //announceKindCode에 있는 EssentialWriter 타입 빈 로딩
