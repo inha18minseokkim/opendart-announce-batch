@@ -1,4 +1,4 @@
 package com.example.opendartannouncereceivebatch.Mapper;
 
-public interface AnnounceCapitalReductionMapper extends EssentialMapper {
+public class AnnounceCapitalReductionMapper implements EssentialMapper {
 }

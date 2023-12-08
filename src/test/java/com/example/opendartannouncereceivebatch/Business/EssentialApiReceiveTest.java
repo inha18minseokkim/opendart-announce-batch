@@ -5,6 +5,7 @@ import com.example.opendartannouncereceivebatch.DTO.ListElement.AnnouncePaidIncr
 import com.example.opendartannouncereceivebatch.Entity.EssentialReport;
 import com.example.opendartannouncereceivebatch.Mapper.AnnouncePaidIncreaseMapper;
 import com.example.opendartannouncereceivebatch.Job.DefaultAnnouncementApiReceiveJobConfig;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(args = {"--beginDate=20230818","--endDate=20230818"})
 @MockBean(classes = {DefaultAnnouncementApiReceiveJobConfig.class})
+@Slf4j
 class EssentialApiReceiveTest {
     @Autowired
     private EssentialApiReceive essentialApiReceive;
@@ -23,8 +25,17 @@ class EssentialApiReceiveTest {
     public void paidIncreaseApiReceive() {
         Stream<?> essentialAnnouncement = essentialApiReceive.getEssentialAnnouncement("20190101", "20191231", "00378363", AnnounceKindCode.PAID_INCREASE);
         essentialAnnouncement.forEach((object) -> {
-            System.out.println(object.toString());
-            System.out.println(object.getClass());
+            log.info(object.toString());
+            log.info(""+object.getClass());
+            assertEquals(object.getClass(),AnnounceKindCode.PAID_INCREASE.getResponseClass());
+        });
+    }
+    @Test
+    public void freeIssueApiReceive() {
+        Stream<?> essentialAnnouncement = essentialApiReceive.getEssentialAnnouncement("20231207", "20231207", "00226547", AnnounceKindCode.FREE_ISSUE);
+        essentialAnnouncement.forEach((object) -> {
+            log.info(object.toString());
+            log.info(""+object.getClass());
             assertEquals(object.getClass(),AnnounceKindCode.PAID_INCREASE.getResponseClass());
         });
     }

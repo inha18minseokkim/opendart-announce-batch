@@ -14,6 +14,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
@@ -28,7 +29,8 @@ import java.util.stream.Stream;
 public class EssentialApiReceive {
     @Value("${opendart.secret}")
     private String opendartSecret;
-
+    private final ObjectMapper objectMapper;
+    private final ExchangeStrategies exchangeStrategies;
     private final ApplicationContext applicationContext;
 
     public Stream<? extends EssentialResponseElement> getEssentialAnnouncement(String beginDate, String endDate, String corpCode, AnnounceKindCode announceKindCode){
@@ -41,6 +43,7 @@ public class EssentialApiReceive {
         String url = uriComponentsBuilder.build().toUriString();
         log.info(url);
         WebClient webClient = WebClient.builder().baseUrl(url)
+                .exchangeStrategies(exchangeStrategies)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_ATOM_XML_VALUE).build();
         Mono<AnnounceEssentialResponse> result = webClient.get().retrieve()
                 .bodyToMono(AnnounceEssentialResponse.class);
@@ -50,9 +53,10 @@ public class EssentialApiReceive {
             log.info(String.format("%s 에 대한 %s ~ %s 동안 %s 이벤트 없음",corpCode,beginDate,endDate,announceKindCode.getClass()));
             return Stream.empty();
         }
-        ObjectMapper objectMapper = new ObjectMapper();
-        log.info(list.toString());
-        return list.stream().map(object -> objectMapper.convertValue(object, responseClass));
+        return list.stream().map((element)->{
+            log.info(element.toString());
+            return element;
+        }).map(object -> objectMapper.convertValue(object, responseClass));
     }
     public Stream<? extends EssentialReport> convertToEntity(Stream<? extends EssentialResponseElement> elementStream,
                                                              AnnounceKindCode announceKindCode) throws InvocationTargetException, InstantiationException, IllegalAccessException {

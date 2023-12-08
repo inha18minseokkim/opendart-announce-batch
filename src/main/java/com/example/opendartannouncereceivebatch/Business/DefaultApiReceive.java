@@ -4,12 +4,17 @@ import com.example.opendartannouncereceivebatch.DTO.AnnounceDefaultElement;
 import com.example.opendartannouncereceivebatch.DTO.AnnounceDefaultResponse;
 import com.example.opendartannouncereceivebatch.Entity.CorpInfo;
 import com.example.opendartannouncereceivebatch.Reader.CorpCodeReader;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.codec.json.Jackson2JsonDecoder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
@@ -26,6 +31,8 @@ public class DefaultApiReceive {
 
     @Value("${opendart.secret}")
     private String opendartSecret;
+    private final ExchangeStrategies exchangeStrategies;
+
 
     /*특정 회사에 대해 beginDate ~ endDate까지의 기본 공시정보 호출*/
     public Mono<AnnounceDefaultResponse> getCurrentCorpAnnounce(Optional<CorpInfo> corpInfo, String beginDate, String endDate, Integer pageNumber) {
@@ -41,8 +48,11 @@ public class DefaultApiReceive {
 
         String url = uriComponentsBuilder.build().toUriString();
         log.info(url);
-        WebClient webClient = WebClient.builder().baseUrl(url)
-                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_ATOM_XML_VALUE).build();
+                WebClient webClient = WebClient.builder().baseUrl(url)
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_ATOM_XML_VALUE)
+                .exchangeStrategies(exchangeStrategies).build();
+//        WebClient webClient = WebClient.builder().baseUrl(url)
+//                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_ATOM_XML_VALUE).build();
         Mono<AnnounceDefaultResponse> result = webClient.get().retrieve()
                 .bodyToMono(AnnounceDefaultResponse.class);
 
