@@ -16,6 +16,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 
 @Slf4j
@@ -33,7 +34,7 @@ public class DailyAnnounceApiReceiveTasklet implements Tasklet {
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
         String beginDate = applicationArguments.getOptionValues("beginDate").get(0);
         String endDate = applicationArguments.getOptionValues("endDate").get(0);
-        LocalDate curDate = LocalDate.parse(beginDate);
+        LocalDate curDate = LocalDate.parse(beginDate, DateTimeFormatter.ofPattern("yyyyMMdd"));
         AnnounceDefaultPageInfo byRceptDt = pageInfoRepository.findByRceptDt(curDate).orElse(AnnounceDefaultPageInfo.builder().rceptDt(curDate).currentCount(0).build());
         Integer startPageNumber = byRceptDt.getCurrentCount();
         log.info(String.format("%s ~ %s 모든 기업 공시정보 가져오기 %d",beginDate,endDate,startPageNumber));

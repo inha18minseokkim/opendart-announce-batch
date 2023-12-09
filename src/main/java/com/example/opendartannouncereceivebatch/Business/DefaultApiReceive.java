@@ -4,6 +4,8 @@ import com.example.opendartannouncereceivebatch.DTO.AnnounceDefaultElement;
 import com.example.opendartannouncereceivebatch.DTO.AnnounceDefaultResponse;
 import com.example.opendartannouncereceivebatch.Entity.CorpInfo;
 import com.example.opendartannouncereceivebatch.Reader.CorpCodeReader;
+import com.example.opendartannouncereceivebatch.Repository.AnnounceDefaultPageInfoRepository;
+import com.example.opendartannouncereceivebatch.Writer.AnnounceDefaultPageInfoWriter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +36,7 @@ public class DefaultApiReceive {
     @Value("${opendart.secret}")
     private String opendartSecret;
     private final ExchangeStrategies exchangeStrategies;
-
+    private final AnnounceDefaultPageInfoWriter pageInfoWriter;
 
     /*특정 회사에 대해 beginDate ~ endDate까지의 기본 공시정보 호출*/
     public Mono<AnnounceDefaultResponse> getCurrentCorpAnnounce(Optional<CorpInfo> corpInfo, String beginDate, String endDate, Integer pageNumber) {
@@ -93,6 +97,8 @@ public class DefaultApiReceive {
             if(block.getTotal_page() == pageNumber) break;
             pageNumber++;
         }
+        //현재 페이지 카운트 저장해놓음
+        pageInfoWriter.saveCurrentPage(LocalDate.parse(beginDate, DateTimeFormatter.ofPattern("yyyyMMdd")),pageNumber);
         log.info(tempResponse.size()+"");
         return tempResponse.stream().map(AnnounceDefaultResponse::getList)
                 .flatMap(List::stream);

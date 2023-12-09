@@ -39,7 +39,7 @@ public class DefaultAnnouncementApiReceiveJobConfig {
     public JobParameters jobParameters() {
         return new JobParametersBuilder().addString("beginDate",beginDate)
                 .addString("endDate",endDate)
-                .addLocalDateTime("executeDate", LocalDateTime.now())
+                .addLong("executeDateTime", System.currentTimeMillis())
                 .toJobParameters();
     }
     @Bean
@@ -53,7 +53,7 @@ public class DefaultAnnouncementApiReceiveJobConfig {
         TaskExecutorJobLauncher taskExecutorJobLauncher = new TaskExecutorJobLauncher();
         taskExecutorJobLauncher.setJobRepository(jobRepository);
         taskExecutorJobLauncher.setTaskExecutor(new SimpleAsyncTaskExecutor());
-        taskExecutorJobLauncher.afterPropertiesSet();
+        //taskExecutorJobLauncher.afterPropertiesSet();
         return taskExecutorJobLauncher;
     }
 
