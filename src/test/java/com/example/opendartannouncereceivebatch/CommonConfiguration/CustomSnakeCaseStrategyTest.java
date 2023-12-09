@@ -26,9 +26,5 @@ class CustomSnakeCaseStrategyTest {
         Assertions.assertThat(strategy.convertToSnakeCase("odAAtT")).isEqualTo("od_a_at_t");
         Assertions.assertThat(strategy.convertToSnakeCase("odAAtB")).isEqualTo("od_a_at_b");
         Assertions.assertThat(strategy.convertToSnakeCase("adtAAtn")).isEqualTo("adt_a_atn");
-
-
-
-
     }
 }
