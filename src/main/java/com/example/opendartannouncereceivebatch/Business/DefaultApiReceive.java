@@ -83,9 +83,9 @@ public class DefaultApiReceive {
     /*
      * beginDate ~ endDate동안 모든 회사에 대한 공시정보 가져옴
      * */
-    public Stream<AnnounceDefaultElement> getAnnouncementList(String beginDate,String endDate){
+    public Stream<AnnounceDefaultElement> getAnnouncementList(String beginDate,String endDate, Integer startPageNumber){
         List<AnnounceDefaultResponse> tempResponse = new ArrayList<>();
-        Integer pageNumber = 1;
+        Integer pageNumber = startPageNumber;
         while (true) {
             AnnounceDefaultResponse block = this.getCurrentCorpAnnounce(Optional.ofNullable(null), beginDate, endDate, pageNumber).block();
             tempResponse.add(block);

@@ -5,8 +5,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest(args = {"--beginDate=20230818","--endDate=20230818"})
 class DefaultAnnouncementDefaultApiReceiveStepConfigTest {
     @Test

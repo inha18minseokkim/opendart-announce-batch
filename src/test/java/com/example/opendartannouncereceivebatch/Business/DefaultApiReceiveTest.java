@@ -47,7 +47,7 @@ class DefaultApiReceiveTest {
     }
     @Test
     public void receive_daily_list() {
-        Stream<AnnounceDefaultElement> announcementList = defaultApiReceive.getAnnouncementList("20230918", "20230918");
+        Stream<AnnounceDefaultElement> announcementList = defaultApiReceive.getAnnouncementList("20230918", "20230918",1);
         //announcementList.forEach(System.out::println);
         log.info(""+announcementList.collect(Collectors.toList()).size());
     }
