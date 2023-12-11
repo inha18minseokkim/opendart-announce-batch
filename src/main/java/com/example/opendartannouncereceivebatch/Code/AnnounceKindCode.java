@@ -1,5 +1,6 @@
 package com.example.opendartannouncereceivebatch.Code;
 
+import com.example.opendartannouncereceivebatch.DTO.AnnounceDefaultElement;
 import com.example.opendartannouncereceivebatch.DTO.ListElement.*;
 import com.example.opendartannouncereceivebatch.Entity.*;
 import com.example.opendartannouncereceivebatch.Mapper.*;
@@ -48,6 +49,15 @@ public enum AnnounceKindCode {
     /*자기주식취득*/
     STOCK_ACQUISITION("https://opendart.fss.or.kr/api/tsstkAqDecsn.json",StockAcquisitionElement.class,
             AnnounceStockAcquisition.class, AnnounceStockAcquisitionMapper.class, StockAcquisitionWriter.class,
+            (AnnounceDefault element) -> {
+                if(!element.getReportNm().contains("주요사항")) return false;
+                if(!element.getReportNm().contains("주식")) return false;
+                if(!element.getReportNm().contains("취득")) return false;
+                return true;
+            }),
+    /*전환사채발행결정*/
+    CONVERTIBLE_BOND("https://opendart.fss.or.kr/api/cvbdIsDecsn.json",ConvertibleBondElement.class,
+            AnnounceConvertibleBond.class, AnnounceConvertibleBondMapper.class, ConvertibleBondWriter.class,
             (AnnounceDefault element) -> {
                 if(!element.getReportNm().contains("주요사항")) return false;
                 if(!element.getReportNm().contains("주식")) return false;

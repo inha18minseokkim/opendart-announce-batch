@@ -1,9 +1,9 @@
 package com.example.opendartannouncereceivebatch.Repository;
 
-import com.example.opendartannouncereceivebatch.Entity.AnnounceStockAcquisition;
+import com.example.opendartannouncereceivebatch.Entity.AnnounceConvertibleBond;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AnnounceStockAcquisitionRepository extends JpaRepository<AnnounceStockAcquisition,Long> {
+public interface AnnounceConvertibleBondRepository extends JpaRepository<AnnounceConvertibleBond,Long> {
 }
