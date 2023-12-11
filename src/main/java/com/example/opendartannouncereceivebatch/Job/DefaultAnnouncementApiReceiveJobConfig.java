@@ -1,6 +1,7 @@
 package com.example.opendartannouncereceivebatch.Job;
 
 import com.example.opendartannouncereceivebatch.Tasklet.DailyAnnounceApiReceiveTasklet;
+import com.example.opendartannouncereceivebatch.Tasklet.EssentialCommonTasklet;
 import com.example.opendartannouncereceivebatch.Tasklet.FreeIssueReceiveTasklet;
 import com.example.opendartannouncereceivebatch.Tasklet.PaidIncreaseReceiveTasklet;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +28,9 @@ import java.time.LocalDateTime;
 @Slf4j
 public class DefaultAnnouncementApiReceiveJobConfig {
     private final DailyAnnounceApiReceiveTasklet dailyAnnounceApiReceiveTasklet;
-    private final PaidIncreaseReceiveTasklet paidIncreaseReceiveTasklet;
-    private final FreeIssueReceiveTasklet freeIssueReceiveTasklet;
+//    private final PaidIncreaseReceiveTasklet paidIncreaseReceiveTasklet;
+//    private final FreeIssueReceiveTasklet freeIssueReceiveTasklet;
+    private final EssentialCommonTasklet essentialCommonTasklet;
     private final ApplicationArguments applicationArguments;
     private final JobRepository jobRepository;
     @Value("${beginDate}")
@@ -65,8 +67,9 @@ public class DefaultAnnouncementApiReceiveJobConfig {
 
         Job exampleJob = new JobBuilder("dailyReceiveJob",jobRepository)
                 .start(dailyReceiveStep(jobRepository,dailyAnnounceApiReceiveTasklet,transactionManager))
-                .next(dailyPaidIncreaseReceiveStep(jobRepository, paidIncreaseReceiveTasklet, transactionManager))
-                .next(dailyFreeIssueReceiveStep(jobRepository,freeIssueReceiveTasklet,transactionManager))
+                .next(dailyCommonEssentialReceiveStep(jobRepository,essentialCommonTasklet,transactionManager))
+     //           .next(dailyPaidIncreaseReceiveStep(jobRepository, paidIncreaseReceiveTasklet, transactionManager))
+     //           .next(dailyFreeIssueReceiveStep(jobRepository,freeIssueReceiveTasklet,transactionManager))
                 .build();
         return exampleJob;
     }
@@ -82,29 +85,39 @@ public class DefaultAnnouncementApiReceiveJobConfig {
         return new StepBuilder("dailyReceiveStep",jobRepository)
                 .tasklet(defaultTasklet,transactionManager).build();
     }
-
     @Bean
     @JobScope
-    public Step dailyPaidIncreaseReceiveStep(JobRepository jobRepository
-            , PaidIncreaseReceiveTasklet defaultTasklet
-            , PlatformTransactionManager transactionManager) {
+    public Step dailyCommonEssentialReceiveStep(JobRepository jobRepository
+    , EssentialCommonTasklet tasklet,PlatformTransactionManager transactionManager){
         String beginDate = applicationArguments.getOptionValues("beginDate").get(0);
         String endDate = applicationArguments.getOptionValues("endDate").get(0);
-        log.info(String.format("%s ~ %s dailyPaidIncreaseReceiveStep 실행",beginDate,endDate));
-        return new StepBuilder("dailyPaidIncreaseReceiveStep",jobRepository)
-                .tasklet(defaultTasklet,transactionManager).build();
+        log.info(String.format("%s ~ %s EssentialCommonTasklet 실행",beginDate,endDate));
+        return new StepBuilder("dailyCommonEssentialReceiveStep",jobRepository)
+                .tasklet(tasklet,transactionManager).build();
     }
 
-    @Bean
-    @JobScope
-    public Step dailyFreeIssueReceiveStep(JobRepository jobRepository
-    , FreeIssueReceiveTasklet defaultTasklet
-    , PlatformTransactionManager transactionManager) {
-        String beginDate = applicationArguments.getOptionValues("beginDate").get(0);
-        String endDate = applicationArguments.getOptionValues("endDate").get(0);
-        log.info(String.format("%s ~ %s dailyFreeIssueReceiveStep 실행",beginDate,endDate));
-        return new StepBuilder("dailyFreeIssueReceiveStep",jobRepository)
-                .tasklet(defaultTasklet,transactionManager).build();
-    }
+//    @Bean
+//    @JobScope
+//    public Step dailyPaidIncreaseReceiveStep(JobRepository jobRepository
+//            , PaidIncreaseReceiveTasklet defaultTasklet
+//            , PlatformTransactionManager transactionManager) {
+//        String beginDate = applicationArguments.getOptionValues("beginDate").get(0);
+//        String endDate = applicationArguments.getOptionValues("endDate").get(0);
+//        log.info(String.format("%s ~ %s dailyPaidIncreaseReceiveStep 실행",beginDate,endDate));
+//        return new StepBuilder("dailyPaidIncreaseReceiveStep",jobRepository)
+//                .tasklet(defaultTasklet,transactionManager).build();
+//    }
+//
+//    @Bean
+//    @JobScope
+//    public Step dailyFreeIssueReceiveStep(JobRepository jobRepository
+//    , FreeIssueReceiveTasklet defaultTasklet
+//    , PlatformTransactionManager transactionManager) {
+//        String beginDate = applicationArguments.getOptionValues("beginDate").get(0);
+//        String endDate = applicationArguments.getOptionValues("endDate").get(0);
+//        log.info(String.format("%s ~ %s dailyFreeIssueReceiveStep 실행",beginDate,endDate));
+//        return new StepBuilder("dailyFreeIssueReceiveStep",jobRepository)
+//                .tasklet(defaultTasklet,transactionManager).build();
+//    }
 
 }

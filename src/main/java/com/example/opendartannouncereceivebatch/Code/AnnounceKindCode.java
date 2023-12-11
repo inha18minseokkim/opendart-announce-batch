@@ -4,10 +4,7 @@ import com.example.opendartannouncereceivebatch.DTO.ListElement.AnnounceCapitalR
 import com.example.opendartannouncereceivebatch.DTO.ListElement.AnnounceFreeIssueElement;
 import com.example.opendartannouncereceivebatch.DTO.ListElement.AnnouncePaidIncreaseElement;
 import com.example.opendartannouncereceivebatch.DTO.ListElement.EssentialResponseElement;
-import com.example.opendartannouncereceivebatch.Entity.AnnounceCapitalReduction;
-import com.example.opendartannouncereceivebatch.Entity.AnnounceFreeIssue;
-import com.example.opendartannouncereceivebatch.Entity.AnnouncePaidIncrease;
-import com.example.opendartannouncereceivebatch.Entity.EssentialReport;
+import com.example.opendartannouncereceivebatch.Entity.*;
 import com.example.opendartannouncereceivebatch.Mapper.AnnounceCapitalReductionMapper;
 import com.example.opendartannouncereceivebatch.Mapper.AnnounceFreeIssueMapper;
 import com.example.opendartannouncereceivebatch.Mapper.AnnouncePaidIncreaseMapper;
@@ -17,17 +14,36 @@ import com.example.opendartannouncereceivebatch.Writer.FreeIssueWriter;
 import com.example.opendartannouncereceivebatch.Writer.PaidIncreaseWriter;
 import lombok.Getter;
 
+import java.util.function.Predicate;
+
 @Getter
 public enum AnnounceKindCode {
     /*유상증자*/
     PAID_INCREASE("https://opendart.fss.or.kr/api/piicDecsn.json",AnnouncePaidIncreaseElement.class,
-            AnnouncePaidIncrease.class, AnnouncePaidIncreaseMapper.class, PaidIncreaseWriter.class),
+            AnnouncePaidIncrease.class, AnnouncePaidIncreaseMapper.class, PaidIncreaseWriter.class
+    ,((AnnounceDefault element) -> {
+        if(!element.getReportNm().contains("주요사항")) return false;
+        if(!element.getReportNm().contains("증자")) return false;
+        if(!element.getReportNm().contains("유상")) return false;
+        return true;
+    })),
     /*무상증자*/
     FREE_ISSUE("https://opendart.fss.or.kr/api/fricDecsn.json",AnnounceFreeIssueElement.class,
-            AnnounceFreeIssue.class, AnnounceFreeIssueMapper.class, FreeIssueWriter.class),
+            AnnounceFreeIssue.class, AnnounceFreeIssueMapper.class, FreeIssueWriter.class
+    ,(AnnounceDefault element) -> {
+        if(!element.getReportNm().contains("주요사항")) return false;
+        if(!element.getReportNm().contains("증자")) return false;
+        if(!element.getReportNm().contains("무상")) return false;
+        return true;
+    }),
     /*감자*/
     CAPITAL_REDUCTION("https://opendart.fss.or.kr/api/crDecsn.json", AnnounceCapitalReductionElement.class,
-            AnnounceCapitalReduction.class, AnnounceCapitalReductionMapper.class, CapitalReductionWriter.class);
+            AnnounceCapitalReduction.class, AnnounceCapitalReductionMapper.class, CapitalReductionWriter.class
+    ,(AnnounceDefault element) -> {
+        if(!element.getReportNm().contains("주요사항")) return false;
+        if(!element.getReportNm().contains("감자")) return false;
+        return true;
+    });
 
     /*호출 할 uri 저장*/
     String uri;
@@ -39,8 +55,10 @@ public enum AnnounceKindCode {
     Class<?> mapperInterface;
     /*Repository 접근하는 EssentialWriter클래스*/
     Class<? extends EssentialWriter> essentialWriter;
+    /*EssentialApiReceive 시 대상 리포트 거르는 필터*/
+    Predicate<AnnounceDefault> filter;
 
-
+    //Preicate 추가 후에 지울 예정
     AnnounceKindCode(String uri, Class<? extends EssentialResponseElement> responseClass,
                      Class<? extends EssentialReport> entityClass, Class<?> mapperInterface,
                         Class<? extends EssentialWriter> essentialWriter) {
@@ -49,5 +67,15 @@ public enum AnnounceKindCode {
         this.entityClass = entityClass;
         this.mapperInterface = mapperInterface;
         this.essentialWriter = essentialWriter;
+    }
+    AnnounceKindCode(String uri, Class<? extends EssentialResponseElement> responseClass,
+                     Class<? extends EssentialReport> entityClass, Class<?> mapperInterface,
+                     Class<? extends EssentialWriter> essentialWriter, Predicate<AnnounceDefault> filter) {
+        this.uri = uri;
+        this.responseClass = responseClass;
+        this.entityClass = entityClass;
+        this.mapperInterface = mapperInterface;
+        this.essentialWriter = essentialWriter;
+        this.filter = filter;
     }
 }
