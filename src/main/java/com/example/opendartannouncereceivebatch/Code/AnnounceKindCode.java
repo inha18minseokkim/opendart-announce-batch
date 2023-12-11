@@ -1,17 +1,12 @@
 package com.example.opendartannouncereceivebatch.Code;
 
-import com.example.opendartannouncereceivebatch.DTO.ListElement.AnnounceCapitalReductionElement;
-import com.example.opendartannouncereceivebatch.DTO.ListElement.AnnounceFreeIssueElement;
-import com.example.opendartannouncereceivebatch.DTO.ListElement.AnnouncePaidIncreaseElement;
-import com.example.opendartannouncereceivebatch.DTO.ListElement.EssentialResponseElement;
+import com.example.opendartannouncereceivebatch.DTO.ListElement.*;
 import com.example.opendartannouncereceivebatch.Entity.*;
 import com.example.opendartannouncereceivebatch.Mapper.AnnounceCapitalReductionMapper;
 import com.example.opendartannouncereceivebatch.Mapper.AnnounceFreeIssueMapper;
 import com.example.opendartannouncereceivebatch.Mapper.AnnouncePaidIncreaseMapper;
-import com.example.opendartannouncereceivebatch.Writer.CapitalReductionWriter;
-import com.example.opendartannouncereceivebatch.Writer.EssentialWriter;
-import com.example.opendartannouncereceivebatch.Writer.FreeIssueWriter;
-import com.example.opendartannouncereceivebatch.Writer.PaidIncreaseWriter;
+import com.example.opendartannouncereceivebatch.Mapper.AnnounceStockDispositionMapper;
+import com.example.opendartannouncereceivebatch.Writer.*;
 import lombok.Getter;
 
 import java.util.function.Predicate;
@@ -42,6 +37,15 @@ public enum AnnounceKindCode {
     ,(AnnounceDefault element) -> {
         if(!element.getReportNm().contains("주요사항")) return false;
         if(!element.getReportNm().contains("감자")) return false;
+        return true;
+    }),
+    /*자기주식처분*/
+    STOCK_DISPOSITION("https://opendart.fss.or.kr/api/tsstkDpDecsn.json",StockDispositionElement.class,
+                      AnnounceStockDisposition.class, AnnounceStockDispositionMapper.class, StockDispositionWriter.class
+    ,(AnnounceDefault element) -> {
+        if(!element.getReportNm().contains("주요사항")) return false;
+        if(!element.getReportNm().contains("주식")) return false;
+        if(!element.getReportNm().contains("처분")) return false;
         return true;
     });
 
