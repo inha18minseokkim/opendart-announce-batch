@@ -1,6 +1,5 @@
 package com.example.opendartannouncereceivebatch.Code;
 
-import com.example.opendartannouncereceivebatch.DTO.AnnounceDefaultElement;
 import com.example.opendartannouncereceivebatch.DTO.ListElement.*;
 import com.example.opendartannouncereceivebatch.Entity.*;
 import com.example.opendartannouncereceivebatch.Mapper.*;
@@ -60,8 +59,29 @@ public enum AnnounceKindCode {
             AnnounceConvertibleBond.class, AnnounceConvertibleBondMapper.class, ConvertibleBondWriter.class,
             (AnnounceDefault element) -> {
                 if(!element.getReportNm().contains("주요사항")) return false;
-                if(!element.getReportNm().contains("주식")) return false;
-                if(!element.getReportNm().contains("취득")) return false;
+                if(!element.getReportNm().contains("전환")) return false;
+                if(!element.getReportNm().contains("사채")) return false;
+                if(!element.getReportNm().contains("발행")) return false;
+                return true;
+            }),
+    /*신주인수권부사채발행결정*/
+    BOND_WITH_WARRANT("https://opendart.fss.or.kr/api/bdwtIsDecsn.json",BondWithWarrantElement.class,
+            AnnounceBondWithWarrant.class, AnnounceBondWithWarrantMapper.class, BondWithWarrantWriter.class,
+            (AnnounceDefault element) -> {
+                if(!element.getReportNm().contains("주요사항")) return false;
+                if(!element.getReportNm().contains("신주")) return false;
+                if(!element.getReportNm().contains("사채")) return false;
+                if(!element.getReportNm().contains("발행")) return false;
+                return true;
+            }),
+    /*교환사채권발행결정*/
+    EXCHANGEABLE_BOND("https://opendart.fss.or.kr/api/exbdIsDecsn.json",ExchangeableBondElement.class,
+            AnnounceExchangeableBond.class, AnnounceExchangeableBondMapper.class, ExchangeableBondWriter.class,
+            (AnnounceDefault element) -> {
+                if(!element.getReportNm().contains("주요사항")) return false;
+                if(!element.getReportNm().contains("신주")) return false;
+                if(!element.getReportNm().contains("사채")) return false;
+                if(!element.getReportNm().contains("발행")) return false;
                 return true;
             });
 
