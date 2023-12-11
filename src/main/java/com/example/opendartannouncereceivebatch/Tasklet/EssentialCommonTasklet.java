@@ -45,8 +45,6 @@ public class EssentialCommonTasklet implements Tasklet {
 
             Integer integer = essentialApiReceive.saveRepository(entityStream, value);
         }
-
         return RepeatStatus.FINISHED;
-
     }
 }
