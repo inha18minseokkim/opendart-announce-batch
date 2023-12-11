@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
 public interface EssentialMapper {
+    org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EssentialMapper.class);
     public default EssentialReport from(EssentialResponseElement element){
         return null;
     }
@@ -59,9 +60,11 @@ public interface EssentialMapper {
             return value;
         } catch(NumberFormatException e){
             //string ""으로 들어오는경우 그냥 null return 좀 위험하긴함.
+            log.error("오류 발생{}, 원본값{} 변환대상타입 {}",e.toString(),value,targetType);
             return null;
         } catch (DateTimeParseException e){
             //string ""으로 들어오는경우 그냥 null
+            log.error("오류 발생{}, 원본값{} 변환대상타입 {}",e.toString(),value,targetType);
             return null;
         }
     }
