@@ -18,7 +18,6 @@ import org.springframework.stereotype.Component;
 import java.util.stream.Stream;
 
 @RequiredArgsConstructor
-@Component
 @Slf4j
 public class FreeIssueReceiveTasklet implements Tasklet {
     private final ApplicationArguments applicationArguments;

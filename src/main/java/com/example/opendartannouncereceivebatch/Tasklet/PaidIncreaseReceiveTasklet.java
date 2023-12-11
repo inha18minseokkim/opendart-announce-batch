@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.stream.Stream;
 
-@Component
 @RequiredArgsConstructor
 @Slf4j
 public class PaidIncreaseReceiveTasklet implements Tasklet {
