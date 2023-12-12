@@ -108,6 +108,14 @@ public enum AnnounceKindCode {
                 if(!element.getReportNm().contains("신탁")) return false;
                 if(!element.getReportNm().contains("해지")) return false;
                 return true;
+            }),
+    /*소송등의제기*/
+    STARTING_SUIT("https://opendart.fss.or.kr/api/lwstLg.json",StartingSuitElement.class,
+            AnnounceStartingSuit.class, AnnounceStartingSuitMapper.class, StartingSuitWriter.class,
+            (AnnounceDefault element) -> {
+                if(!element.getReportNm().contains("주요사항")) return false;
+                if(!element.getReportNm().contains("소송")) return false;
+                return true;
             });
 
     /*호출 할 uri 저장*/
