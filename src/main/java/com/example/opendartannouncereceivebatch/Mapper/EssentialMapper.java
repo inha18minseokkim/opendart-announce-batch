@@ -6,6 +6,7 @@ import com.example.opendartannouncereceivebatch.Entity.EssentialReport;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public interface EssentialMapper {
@@ -52,7 +53,7 @@ public interface EssentialMapper {
                 return Double.parseDouble(value.toString());
             } else if (targetType.equals(LocalDate.class)) {
                 // Assume source is a String for simplicity
-                return LocalDate.parse(value.toString());
+                return LocalDate.parse(value.toString(), DateTimeFormatter.ofPattern("yyyyMMdd"));
             }
             // Add more type conversions as needed
 
@@ -60,12 +61,15 @@ public interface EssentialMapper {
             return value;
         } catch(NumberFormatException e){
             //string ""으로 들어오는경우 그냥 null return 좀 위험하긴함.
-            log.error("오류 발생{}, 원본값{} 변환대상타입 {}",e.toString(),value,targetType);
+            log.error("오류 발생 {}, 원본값 {} , 변환대상타입 {}",e.toString(),value,targetType);
             return null;
         } catch (DateTimeParseException e){
             //string ""으로 들어오는경우 그냥 null
-            log.error("오류 발생{}, 원본값{} 변환대상타입 {}",e.toString(),value,targetType);
+            log.error("오류 발생 {}, 원본값 {} , 변환대상타입 {}",e.toString(),value,targetType);
             return null;
+        } catch(NullPointerException e){
+            log.error("Null오류 발생 {}, 원본값 {} , 변환대상타입 {}",e.toString(),value,targetType);
+            throw new IllegalStateException("null on map");
         }
     }
 
