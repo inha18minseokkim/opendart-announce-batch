@@ -49,6 +49,10 @@ public class EssentialApiReceive {
                 .bodyToMono(AnnounceEssentialResponse.class);
         AnnounceEssentialResponse block = result.block();
         List<Object> list = block.getList();
+        if(!block.getStatus().equals("000")){
+            log.info(String.format("%s 에 대한 %s ~ %s 동안 %s 이벤트 없음",corpCode,beginDate,endDate,announceKindCode.getClass()));
+            return Stream.empty();
+        }
         if(list == null || list.isEmpty()){
             log.info(String.format("%s 에 대한 %s ~ %s 동안 %s 이벤트 없음",corpCode,beginDate,endDate,announceKindCode.getClass()));
             return Stream.empty();

@@ -1,5 +1,12 @@
 package com.example.opendartannouncereceivebatch.DTO.ListElement;
 
+import lombok.*;
+
+@ToString
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class StockAcquisitionElement implements EssentialResponseElement{
     private String rceptNo;	//접수번호
     private String corpCls;	//법인구분

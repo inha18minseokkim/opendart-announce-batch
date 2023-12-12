@@ -27,9 +27,9 @@ public class AnnounceStockDisposition implements EssentialReport{
     private Long dpMEtc;	//처분방법(기타(주))
     private String csIvBk;	//위탁투자중개업자
     private Long aqWtnDivOstk;	//처분 전 자기주식 보유현황(배당가능이익 범위 내 취득(주)(보통주식))
-    private Long aqWtnDivOstkRt;	//처분 전 자기주식 보유현황(배당가능이익 범위 내 취득(주)(비율(%)))
+    private Double aqWtnDivOstkRt;	//처분 전 자기주식 보유현황(배당가능이익 범위 내 취득(주)(비율(%)))
     private Long aqWtnDivEstk;	//처분 전 자기주식 보유현황(배당가능이익 범위 내 취득(주)(기타주식))
-    private Long aqWtnDivEstkRt;	//처분 전 자기주식 보유현황(배당가능이익 범위 내 취득(주)(비율(%)))
+    private Double aqWtnDivEstkRt;	//처분 전 자기주식 보유현황(배당가능이익 범위 내 취득(주)(비율(%)))
     private Long eaqOstk;	//처분 전 자기주식 보유현황(기타취득(주)(보통주식))
     private Double eaqOstkRt;	//처분 전 자기주식 보유현황(기타취득(주)(비율(%)))
     private Long eaqEstk;	//처분 전 자기주식 보유현황(기타취득(주)(기타주식))
