@@ -83,6 +83,31 @@ public enum AnnounceKindCode {
                 if(!element.getReportNm().contains("사채")) return false;
                 if(!element.getReportNm().contains("발행")) return false;
                 return true;
+            }),
+    /*자기주식취득신탁계약체결*/
+    STOCK_ACQUISITION_TRUST_CONTRACT("https://opendart.fss.or.kr/api/tsstkAqTrctrCnsDecsn.json",StockAcquisitionTrustContractElement.class,
+            AnnounceStockAcquisitionTrustContract.class,AnnounceStockAcquisitionTrustContractMapper.class, StockAcquisitionTrustContractWriter.class,
+            (AnnounceDefault element) -> {
+                if(!element.getReportNm().contains("주요사항")) return false;
+                if(!element.getReportNm().contains("자기")) return false;
+                if(!element.getReportNm().contains("주식")) return false;
+                if(!element.getReportNm().contains("취득")) return false;
+                if(!element.getReportNm().contains("신탁")) return false;
+                if(!element.getReportNm().contains("체결")) return false;
+                return true;
+            }
+    ),
+    /*자기주식취득신탁계약해지*/
+    STOCK_ACQUISITION_TRUST_TERMINATION("https://opendart.fss.or.kr/api/tsstkAqTrctrCcDecsn.json",StockAcquisitionTrustCloseElement.class,
+            AnnounceStockAcquisitionTrustClose.class,AnnounceStockAcquisitionTrustCloseMapper.class, StockAcquisitionTrustCloseWriter.class,
+            (AnnounceDefault element) -> {
+                if(!element.getReportNm().contains("주요사항")) return false;
+                if(!element.getReportNm().contains("자기")) return false;
+                if(!element.getReportNm().contains("주식")) return false;
+                if(!element.getReportNm().contains("취득")) return false;
+                if(!element.getReportNm().contains("신탁")) return false;
+                if(!element.getReportNm().contains("해지")) return false;
+                return true;
             });
 
     /*호출 할 uri 저장*/
