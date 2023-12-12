@@ -2,6 +2,7 @@ package com.example.opendartannouncereceivebatch.Business;
 
 import com.example.opendartannouncereceivebatch.Code.AnnounceKindCode;
 import com.example.opendartannouncereceivebatch.DTO.ListElement.AnnouncePaidIncreaseElement;
+import com.example.opendartannouncereceivebatch.DTO.ListElement.EssentialResponseElement;
 import com.example.opendartannouncereceivebatch.Entity.EssentialReport;
 import com.example.opendartannouncereceivebatch.Mapper.AnnouncePaidIncreaseMapper;
 import com.example.opendartannouncereceivebatch.Job.DefaultAnnouncementApiReceiveJobConfig;
@@ -38,6 +39,11 @@ class EssentialApiReceiveTest {
             log.info(""+object.getClass());
             assertEquals(object.getClass(),AnnounceKindCode.PAID_INCREASE.getResponseClass());
         });
+    }
+    @Test
+    public void stockDispositionTest() {
+        Stream<? extends EssentialResponseElement> essentialAnnouncement = essentialApiReceive.getEssentialAnnouncement("20231212", "20231212", "00221728", AnnounceKindCode.STOCK_DISPOSITION);
+        essentialAnnouncement.forEach((element) -> {log.info(element.toString());});
     }
 
     @Test
