@@ -1,11 +1,18 @@
 package com.example.opendartannouncereceivebatch.Entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@ToString
+@Getter
 public class AnnounceBondWithWarrant implements EssentialReport{
     @Id
     private String rceptNo; //	접수번호
@@ -33,8 +40,11 @@ public class AnnounceBondWithWarrant implements EssentialReport{
     private String bdisMthn; //	사채발행방법
     private Double exRt; //	신주인수권에 관한 사항(행사비율 (%))
     private Long exPrc; //	신주인수권에 관한 사항(행사가액 (원/주))
+    @Column(length=1000)
     private String exPrcDmth; //	신주인수권에 관한 사항(행사가액 결정방법)
+    @Column(length=1000)
     private String bdwtDivAtn; //	신주인수권에 관한 사항(사채와 인수권의 분리여부)
+    @Column(length=1000)
     private String nstkPymMth; //	신주인수권에 관한 사항(신주대금 납입방법)
     private String nstkIsstkKnd; //	신주인수권에 관한 사항(신주인수권 행사에 따라 발행할 주식(종류))
     private Long nstkIsstkCnt; //	신주인수권에 관한 사항(신주인수권 행사에 따라 발행할 주식(주식수))
@@ -42,6 +52,7 @@ public class AnnounceBondWithWarrant implements EssentialReport{
     private LocalDate expdBgd; //	신주인수권에 관한 사항(권리행사기간(시작일))
     private LocalDate expdEdd; //	신주인수권에 관한 사항(권리행사기간(종료일))
     private Long actMktprcflCvprcLwtrsprc; //	신주인수권에 관한 사항(시가하락에 따른 행사가액 조정(최저 조정가액 (원)))
+    @Column(length=1000)
     private String actMktprcflCvprcLwtrsprcBs; //	신주인수권에 관한 사항(시가하락에 따른 행사가액 조정(최저 조정가액 근거))
     private Long rmislmtLt70p; //	신주인수권에 관한 사항(시가하락에 따른 행사가액 조정(발행당시 행사가액의 70% 미만으로 조정가능한 잔여 발행한도 (원)))
     private String abmg; //	합병 관련 사항
@@ -54,6 +65,7 @@ public class AnnounceBondWithWarrant implements EssentialReport{
     private Long odAAtB; //	사외이사 참석여부(불참 (명))
     private String adtAAtn; //	감사(감사위원) 참석여부
     private String rsSmAtn; //	증권신고서 제출대상 여부
+    @Column(length=1000)
     private String exSmR; //	제출을 면제받은 경우 그 사유
     private String ovisLtdtl; //	당해 사채의 해외발행과 연계된 대차거래 내역
     private String ftcSttAtn; //	공정거래위원회 신고대상 여부

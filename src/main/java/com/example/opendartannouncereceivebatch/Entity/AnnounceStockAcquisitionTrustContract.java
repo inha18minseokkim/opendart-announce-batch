@@ -1,11 +1,18 @@
 package com.example.opendartannouncereceivebatch.Entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@ToString
+@Getter
 public class AnnounceStockAcquisitionTrustContract implements EssentialReport{
     @Id
     private String rceptNo; //	접수번호
@@ -15,6 +22,7 @@ public class AnnounceStockAcquisitionTrustContract implements EssentialReport{
     private Long ctrPrc; //	계약금액(원)
     private LocalDate ctrPdBgd; //	계약기간(시작일)
     private LocalDate ctrPdEdd; //	계약기간(종료일)
+    @Column(length=1000)
     private String ctrPp; //	계약목적
     private String ctrCnsInt; //	계약체결기관
     private LocalDate ctrCnsPrd; //	계약체결 예정일자

@@ -1,11 +1,18 @@
 package com.example.opendartannouncereceivebatch.Entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@ToString
+@Getter
 public class AnnounceStockDisposition implements EssentialReport{
     @Id
     private String rceptNo;	//접수번호
@@ -20,6 +27,7 @@ public class AnnounceStockDisposition implements EssentialReport{
     private Long dpplnPrcEstk;	//처분예정금액(원)(기타주식)
     private LocalDate dpprpdBgd;	//처분예정기간(시작일)
     private LocalDate dpprpdEdd;	//처분예정기간(종료일)
+    @Column(length=1000)
     private String dpPp;	//처분목적
     private Long dpMMkt;	//처분방법(시장을 통한 매도(주))
     private Long dpMOvtm;	//처분방법(시간외대량매매(주))

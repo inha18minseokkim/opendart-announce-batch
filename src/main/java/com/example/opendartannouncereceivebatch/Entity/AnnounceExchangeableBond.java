@@ -3,11 +3,17 @@ package com.example.opendartannouncereceivebatch.Entity;
 import com.example.opendartannouncereceivebatch.Writer.EssentialWriter;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import lombok.*;
 import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@ToString
+@Getter
 public class AnnounceExchangeableBond implements EssentialReport {
     @Id
     private String rceptNo;	//접수번호

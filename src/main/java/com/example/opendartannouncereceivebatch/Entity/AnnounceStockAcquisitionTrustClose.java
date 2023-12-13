@@ -1,11 +1,18 @@
 package com.example.opendartannouncereceivebatch.Entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@ToString
+@Getter
 public class AnnounceStockAcquisitionTrustClose implements EssentialReport{
     @Id
     private String rceptNo; //	접수번호
@@ -16,9 +23,11 @@ public class AnnounceStockAcquisitionTrustClose implements EssentialReport{
     private Long ctrPrcAtcc; //	계약금액(원)(해지 후)
     private LocalDate ctrPdBfccBgd; //	해지 전 계약기간(시작일)
     private LocalDate ctrPdBfccEdd; //	해지 전 계약기간(종료일)
+    @Column(length=1000)
     private String ccPp; //	해지목적
     private String ccInt; //	해지기관
     private LocalDate ccPrd; //	해지예정일자
+    @Column(length=1000)
     private String tpRmAtcc; //	해지후 신탁재산의 반환방법
     private Long aqWtnDivOstk; //	해지 전 자기주식 보유현황(배당가능범위 내 취득(주)(보통주식))
     private Double aqWtnDivOstkRt; //	해지 전 자기주식 보유현황(배당가능범위 내 취득(주)(비율(%)))

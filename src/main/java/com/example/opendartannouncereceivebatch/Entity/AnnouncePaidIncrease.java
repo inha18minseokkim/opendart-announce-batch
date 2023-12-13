@@ -30,6 +30,7 @@ public class AnnouncePaidIncrease implements EssentialReport {
     private Long fdppDtrp;//	자금조달의 목적(채무상환자금 (원))
     private Long fdppOcsa;//	자금조달의 목적(타법인 증권 취득자금 (원))
     private Long fdppEtc;//	자금조달의 목적(기타자금 (원))
+    @Column(length=1000)
     private String icMthn;//	증자방식
     private String sslAt;//	공매도 해당여부
     private LocalDate sslBgd;//	공매도 시작일
